@@ -17,6 +17,7 @@ const navigation = [
       { name: "Gender", href: "/admin/master/gender" },
       { name: "Social Status", href: "/admin/master/socialstatus" },
       { name: "Info Source", href: "/admin/master/infosource" },
+      { name: "exam", href: "/admin/master/exam" },
     ],
   },
 ];

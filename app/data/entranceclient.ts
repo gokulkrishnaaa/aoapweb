@@ -8,3 +8,22 @@ export async function getOpenExams() {
     return null;
   }
 }
+
+export async function getEntrances() {
+  try {
+    const { data } = await apiclient.get("/api/entrance");
+    return data;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getExamsByEntrance(entranceId) {
+  try {
+    const { data } = await apiclient.get(`/api/exam/${entranceId}`);
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+}
