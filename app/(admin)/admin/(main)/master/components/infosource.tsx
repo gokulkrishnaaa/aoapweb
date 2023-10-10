@@ -1,7 +1,11 @@
 "use client";
 import DataLoader from "@/app/components/DataLoader";
-import { addGender, removeGender, updateGender } from "@/app/data/admin/gender";
-import getGender from "@/app/data/getGender";
+import {
+  addInfoSource,
+  removeInfoSource,
+  updateInfoSource,
+} from "@/app/data/admin/infosource";
+import getInfoSource from "@/app/data/getInfoSource";
 import {
   CheckIcon,
   ExclamationCircleIcon,
@@ -27,7 +31,7 @@ const MasterSchema = yup.object().shape({
     .min(1, "Minimum 8 characters"),
 });
 
-export default function Gender() {
+export default function InfoSource() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmationData, setConfirmationData] = useState(null);
   const [actionQueue, setActionQueue] = useState([]);
@@ -54,30 +58,30 @@ export default function Gender() {
   });
 
   const { data: items, isLoading: itemsLoading } = useQuery({
-    queryKey: ["gender"],
-    queryFn: () => getGender(),
+    queryKey: ["infosource"],
+    queryFn: () => getInfoSource(),
   });
 
   const { mutate: addMutate, isLoading: mutationLoading } = useMutation({
-    mutationFn: (data) => addGender(data),
+    mutationFn: (data) => addInfoSource(data),
     onSettled: (data, error, variables, context) => {
-      queryClient.invalidateQueries(["gender"]);
+      queryClient.invalidateQueries(["infosource"]);
     },
   });
 
   const { mutate: editMutate, isLoading: editMutationLoading } = useMutation({
-    mutationFn: (data) => updateGender(data),
+    mutationFn: (data) => updateInfoSource(data),
     onSettled: async (data, error, variables, context) => {
       cancelEdit();
-      await queryClient.invalidateQueries(["gender"]);
+      await queryClient.invalidateQueries(["infosource"]);
     },
   });
 
   const { mutate: removeMutate, isLoading: removeMutationLoading } =
     useMutation({
-      mutationFn: (id) => removeGender(id),
+      mutationFn: (id) => removeInfoSource(id),
       onSettled: async (data, error, variables, context) => {
-        await queryClient.invalidateQueries(["gender"]);
+        await queryClient.invalidateQueries(["infosource"]);
         setActionQueue((state) => state.filter((item) => item != data.id));
       },
     });
@@ -122,14 +126,13 @@ export default function Gender() {
     setActionQueue((state) => [...state, id]);
   }
 
-  console.log(editError);
-
   return (
     <>
       <div className="px-4 sm:px-6 lg:px-8 max-w-2xl">
         <div className="space-y-5">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Gender {removeMutationLoading ? <DataLoader size="xs" /> : null}
+            Where did you hear about Amrita ?{" "}
+            {removeMutationLoading ? <DataLoader size="xs" /> : null}
           </h2>
           <form
             action=""

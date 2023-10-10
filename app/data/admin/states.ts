@@ -1,8 +1,8 @@
 import apiclient from "@/app/utilities/createclient";
 
-export const addGender = async (input) => {
+export const addState = async (input) => {
   try {
-    const { data } = await apiclient.post(`/api/master/gender`, input);
+    const { data } = await apiclient.post(`/api/master/states`, input);
     return data;
   } catch (error) {
     const { data } = error.response;
@@ -10,9 +10,9 @@ export const addGender = async (input) => {
   }
 };
 
-export const updateGender = async ({ id, input }) => {
+export const updateState = async ({ id, input }) => {
   try {
-    const { data } = await apiclient.put(`/api/master/gender/${id}`, input);
+    const { data } = await apiclient.put(`/api/master/states/${id}`, input);
     return data;
   } catch (error) {
     const { data } = error.response;
@@ -20,9 +20,9 @@ export const updateGender = async ({ id, input }) => {
   }
 };
 
-export const removeGender = async (id) => {
+export const removeState = async (id) => {
   try {
-    const { data } = await apiclient.delete(`/api/master/gender/${id}`);
+    const { data } = await apiclient.delete(`/api/master/states/${id}`);
     return data;
   } catch (error) {
     const { data } = error.response;

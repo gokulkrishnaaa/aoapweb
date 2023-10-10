@@ -18,13 +18,24 @@ const ExamUpdate = ({ entrance }) => {
       <h2 className="block text-sm font-bold leading-6 text-gray-900">
         {entrance.code.toUpperCase()} - {entrance.name}
       </h2>
+      <div className="my-3">
+        <button
+          type="button"
+          className="rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+        >
+          Create New Exam
+        </button>
+      </div>
       <div>
         {examsLoading ? (
           <DataLoader />
         ) : exams.length > 0 ? (
           <div>
             <p>{exams[0].description}</p>
-            <select className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6">
+            <select
+              onChange={(e) => changeStatus(exams[0])}
+              className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
+            >
               {Object.keys(ExamStatus).map((key) => (
                 <option key={key} value={key}>
                   {v.capitalize(key.toLowerCase())}

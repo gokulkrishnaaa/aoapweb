@@ -1,7 +1,11 @@
 "use client";
 import DataLoader from "@/app/components/DataLoader";
-import { addGender, removeGender, updateGender } from "@/app/data/admin/gender";
-import getGender from "@/app/data/getGender";
+import {
+  addDistrict,
+  removeDistrict,
+  updateDistrict,
+} from "@/app/data/admin/district";
+import getDistrictByState from "@/app/data/getDistrictByState";
 import {
   CheckIcon,
   ExclamationCircleIcon,
@@ -15,6 +19,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Confirmation from "../../../components/confirmation";
+import getGender from "@/app/data/getGender";
+import getStates from "@/app/data/getStates";
+import { Spinner } from "flowbite-react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -25,21 +32,25 @@ const MasterSchema = yup.object().shape({
     .string()
     .required("Name is required")
     .min(1, "Minimum 8 characters"),
+  genderId: yup.number().positive("Gender is required"),
 });
 
-export default function Gender() {
+export default function District() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmationData, setConfirmationData] = useState(null);
   const [actionQueue, setActionQueue] = useState([]);
   const [editId, setEditId] = useState(0);
   const [editName, setEditName] = useState("");
   const [editError, setEditError] = useState(null);
+  const [stateId, setStateId] = useState(null);
   const queryClient = useQueryClient();
 
   const {
     register,
     handleSubmit,
     reset,
+    clearErrors,
+    setError,
     formState: { errors },
   } = useForm({
     resolver: async (data, context, options) => {
@@ -53,38 +64,54 @@ export default function Gender() {
     },
   });
 
-  const { data: items, isLoading: itemsLoading } = useQuery({
-    queryKey: ["gender"],
-    queryFn: () => getGender(),
+  const {
+    data: items,
+    isLoading: itemsLoading,
+    isFetching: itemsFetching,
+  } = useQuery({
+    queryKey: ["district", stateId],
+    queryFn: () => getDistrictByState(stateId),
+    enabled: !!stateId,
+  });
+
+  const { data: states, isLoading: statesLoading } = useQuery({
+    queryKey: ["states"],
+    queryFn: () => getStates(),
   });
 
   const { mutate: addMutate, isLoading: mutationLoading } = useMutation({
-    mutationFn: (data) => addGender(data),
+    mutationFn: (data) => addDistrict(data),
     onSettled: (data, error, variables, context) => {
-      queryClient.invalidateQueries(["gender"]);
+      queryClient.invalidateQueries(["district", stateId]);
     },
   });
 
   const { mutate: editMutate, isLoading: editMutationLoading } = useMutation({
-    mutationFn: (data) => updateGender(data),
+    mutationFn: (data) => updateDistrict(data),
     onSettled: async (data, error, variables, context) => {
       cancelEdit();
-      await queryClient.invalidateQueries(["gender"]);
+      await queryClient.invalidateQueries(["district", stateId]);
     },
   });
 
   const { mutate: removeMutate, isLoading: removeMutationLoading } =
     useMutation({
-      mutationFn: (id) => removeGender(id),
+      mutationFn: (id) => removeDistrict(id),
       onSettled: async (data, error, variables, context) => {
-        await queryClient.invalidateQueries(["gender"]);
+        await queryClient.invalidateQueries(["district", stateId]);
         setActionQueue((state) => state.filter((item) => item != data.id));
       },
     });
 
   async function onSumbit(data) {
-    await addMutate(data);
-    reset();
+    clearErrors("name");
+    if (!stateId || stateId === 0) {
+      setError("name", { type: "custom", message: "Select State" });
+    } else {
+      const addData = { ...data, stateId };
+      await addMutate(addData);
+      reset();
+    }
   }
 
   function confirmRemove(id) {
@@ -112,7 +139,7 @@ export default function Gender() {
 
   function saveEdit() {
     if (editName != "") {
-      editMutate({ id: editId, input: { name: editName } });
+      editMutate({ id: editId, input: { name: editName, stateId } });
     } else {
       setEditError({ name: { message: "Name is required" } });
     }
@@ -129,47 +156,84 @@ export default function Gender() {
       <div className="px-4 sm:px-6 lg:px-8 max-w-2xl">
         <div className="space-y-5">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Gender {removeMutationLoading ? <DataLoader size="xs" /> : null}
+            District {removeMutationLoading ? <DataLoader size="xs" /> : null}
           </h2>
-          <form
-            action=""
-            className="flex gap-4"
-            onSubmit={handleSubmit(onSumbit)}
-          >
-            <div className="relative flex-1">
-              <input
-                type="text"
-                {...register("name")}
-                placeholder="Enter Name"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
-              />
-              {errors["name"] && (
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                  <ExclamationCircleIcon
-                    className="h-5 w-5 text-red-500"
-                    aria-hidden="true"
-                  />
-                </div>
-              )}
-            </div>
-            <div>
-              <button
-                type="submit"
-                disabled={mutationLoading}
-                className="rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+
+          <div className="space-y-5">
+            <div className="sm:col-span-3">
+              <label
+                htmlFor="first-name"
+                className="block text-sm font-medium leading-6 text-gray-900"
               >
-                {mutationLoading ? <DataLoader size="sm" /> : "Add"}
-              </button>
+                Select State{" "}
+                {statesLoading ? (
+                  <Spinner
+                    aria-label="Pink spinner example"
+                    color="pink"
+                    size="sm"
+                  />
+                ) : null}
+              </label>
+              <div className="relative mt-2">
+                <select
+                  onChange={(e) => {
+                    clearErrors();
+                    setStateId(parseInt(e.target.value));
+                  }}
+                  className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
+                >
+                  <option value="0">--Select--</option>
+                  {states &&
+                    states.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
             </div>
-          </form>
+            <form
+              action=""
+              className="flex gap-4"
+              onSubmit={handleSubmit(onSumbit)}
+            >
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  {...register("name")}
+                  placeholder="Enter Name"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                />
+                {errors["name"] && (
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                    <ExclamationCircleIcon
+                      className="h-5 w-5 text-red-500"
+                      aria-hidden="true"
+                    />
+                  </div>
+                )}
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  disabled={mutationLoading}
+                  className="rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+                >
+                  {mutationLoading ? <DataLoader size="sm" /> : "Add"}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
         <div className="-mx-4 mt-10 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg max-w-2xl">
-          {itemsLoading ? (
+          {itemsFetching ? (
             <div>
               <div className="py-6 flex justify-center">
                 <DataLoader />
               </div>
             </div>
+          ) : !items ? (
+            <p className="py-10 px-4 text-center">Select State</p>
           ) : items.length < 1 ? (
             <p className="py-10 px-4 text-center">Add Items</p>
           ) : (

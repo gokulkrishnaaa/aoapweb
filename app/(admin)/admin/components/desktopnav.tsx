@@ -3,26 +3,63 @@ import React from "react";
 import { Disclosure } from "@headlessui/react";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const navigation = [
-  { name: "Dashboard", href: "/admin/dashboard", current: false },
+  { name: "Dashboard", href: "/admin/dashboard" },
   {
     name: "Master",
     current: true,
     children: [
+      { name: "Entrance", href: "/admin/master/entrance" },
+      { name: "Entrance Cities", href: "/admin/master/entrancecities" },
       { name: "Gender", href: "/admin/master/gender" },
       { name: "Social Status", href: "/admin/master/socialstatus" },
       { name: "Info Source", href: "/admin/master/infosource" },
-      { name: "exam", href: "/admin/master/exam" },
+      { name: "States", href: "/admin/master/states" },
+      { name: "District", href: "/admin/master/district" },
+      { name: "City", href: "/admin/master/city" },
+      { name: "Exam", href: "/admin/master/exam" },
+      { name: "Courses", href: "/admin/master/courses" },
+      { name: "Campus", href: "/admin/master/campus" },
     ],
   },
 ];
 
 const DesktopNav = () => {
+  const fullPath = usePathname();
+
+  function isRootPath(name) {
+    if (!name) {
+      return false;
+    }
+    const pathnames = fullPath.split("/");
+    const rootNav = pathnames[2];
+    const checkPath = name.toLowerCase();
+    if (rootNav === checkPath) {
+      return true;
+    }
+    return false;
+  }
+
+  function isSubPath(path) {
+    if (!path) {
+      return false;
+    }
+
+    const pathnames = fullPath.split("/");
+    const subNav = pathnames[3];
+    const checkPath = path.split("/");
+    if (subNav === checkPath[3]) {
+      return true;
+    }
+    return false;
+  }
+
   return (
     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-pink-600 px-6 pb-4">
       <div className="flex h-16 shrink-0 items-center">
@@ -45,7 +82,7 @@ const DesktopNav = () => {
                     <a
                       href={item.href}
                       className={classNames(
-                        item.current
+                        isRootPath(item.name)
                           ? "bg-pink-700 text-white"
                           : "text-pink-200 hover:text-white hover:bg-pink-700",
                         "block rounded-md py-2 pr-2 pl-10 text-sm leading-6 font-semibold"
@@ -54,12 +91,12 @@ const DesktopNav = () => {
                       {item.name}
                     </a>
                   ) : (
-                    <Disclosure as="div">
+                    <Disclosure as="div" defaultOpen={isRootPath(item.name)}>
                       {({ open }) => (
                         <>
                           <Disclosure.Button
                             className={classNames(
-                              item.current
+                              isRootPath(item.name)
                                 ? "bg-pink-700 text-white"
                                 : "text-pink-200 hover:text-white hover:bg-pink-700",
                               "flex items-center w-full text-left rounded-md p-2 gap-x-3 text-sm leading-6 font-semibold text-gray-700"
@@ -82,7 +119,7 @@ const DesktopNav = () => {
                                   as="a"
                                   href={subItem.href}
                                   className={classNames(
-                                    subItem.current
+                                    isSubPath(subItem.href)
                                       ? "bg-pink-700 text-white"
                                       : "text-pink-200 hover:text-white hover:bg-pink-700",
                                     "block rounded-md py-2 pr-2 pl-9 text-sm leading-6"

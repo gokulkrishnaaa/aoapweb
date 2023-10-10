@@ -18,6 +18,36 @@ export async function getEntrances() {
   }
 }
 
+export const addEntrance = async (input) => {
+  try {
+    const { data } = await apiclient.post(`/api/entrance`, input);
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};
+
+export const removeEntrance = async (id) => {
+  try {
+    const { data } = await apiclient.delete(`/api/entrance/${id}`);
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};
+
+export const updateEntrance = async ({ id, input }) => {
+  try {
+    const { data } = await apiclient.put(`/api/entrance/${id}`, input);
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};
+
 export async function getExamsByEntrance(entranceId) {
   try {
     const { data } = await apiclient.get(`/api/exam/${entranceId}`);
