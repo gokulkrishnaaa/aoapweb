@@ -10,6 +10,7 @@ import District from "../components/district";
 import City from "../components/city";
 import Entrance from "../components/entrance";
 import EntranceCities from "../components/entrancecities";
+import Programmes from "../components/programmes";
 
 const Page = ({ params }) => {
   switch (params.section) {
@@ -35,6 +36,8 @@ const Page = ({ params }) => {
       return <Entrance />;
     case "entrancecities":
       return <EntranceCities />;
+    case "programmes":
+      return <Programmes />;
     default:
       return <div>Section does not exists</div>;
   }

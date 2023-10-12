@@ -17,6 +17,7 @@ const navigation = [
     children: [
       { name: "Entrance", href: "/admin/master/entrance" },
       { name: "Entrance Cities", href: "/admin/master/entrancecities" },
+      { name: "Programmes", href: "/admin/master/programmes" },
       { name: "Gender", href: "/admin/master/gender" },
       { name: "Social Status", href: "/admin/master/socialstatus" },
       { name: "Info Source", href: "/admin/master/infosource" },

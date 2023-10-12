@@ -8,6 +8,7 @@ import { ExamStatus } from "@/app/data/admin/examenums";
 
 const Exam = () => {
   const [entrance, setEntrance] = useState(null);
+
   const { data: entrances, isLoading: entrancesLoading } = useQuery({
     queryKey: ["entrances"],
     queryFn: () => getEntrances(),

@@ -9,7 +9,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { getCampus } from "@/app/data/admin/campus";
-import { getProgrammesByEntrance } from "@/app/data/programmes";
+import { getProgrammesByEntrance } from "@/app/data/admin/programmes";
 import {
   addProgrammeToApplication,
   getProgrammesByApplication,
