@@ -1,13 +1,18 @@
 import React from "react";
 import AeeeWrapper from "./AeeeWrapper";
 import { redirect } from "next/navigation";
+import {
+  createApplication,
+  getApplicationByExam,
+} from "@/app/data/application";
 
-const ShowApplication = ({ application }) => {
-  if (application.status != "PENDING") {
-    redirect(`/applications/${application.id}`);
+const ShowApplication = async ({ examid }) => {
+  let application = await getApplicationByExam({ examid: examid });
+  if (!application) {
+    application = await createApplication({ examId: examid });
   }
 
-  return <AeeeWrapper application={application} />;
+  redirect(`/applications/${application.id}`);
 };
 
 export default ShowApplication;

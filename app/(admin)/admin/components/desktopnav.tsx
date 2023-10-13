@@ -27,6 +27,7 @@ const navigation = [
       { name: "Exam", href: "/admin/master/exam" },
       { name: "Courses", href: "/admin/master/courses" },
       { name: "Campus", href: "/admin/master/campus" },
+      { name: "Transactions", href: "/admin/master/transactions" },
     ],
   },
 ];

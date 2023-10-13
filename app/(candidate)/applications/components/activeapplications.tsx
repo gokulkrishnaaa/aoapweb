@@ -18,6 +18,7 @@ export default function ActiveApplicationsPanel() {
           <DataLoader />
         </div>
       ) : (
+        entrances &&
         entrances.map((entrance) => (
           <ActiveApplicationSummary key={entrance.id} entrance={entrance} />
         ))

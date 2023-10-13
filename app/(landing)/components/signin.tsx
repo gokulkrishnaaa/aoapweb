@@ -7,6 +7,8 @@ import { isValidEmail } from "@/app/utilities/checkemail";
 import OtpTimer from "./otptimer";
 import signIn from "@/app/data/signin";
 import sendEmailOtp from "@/app/data/emailotp";
+import isValidPhone from "@/app/utilities/checkphone";
+import sendPhoneOtp from "@/app/data/phoneotp";
 
 const SignIn = () => {
   const [signInMode, setSignInMode] = useState(false);
@@ -34,6 +36,11 @@ const SignIn = () => {
         if (!isValidEmail(username)) {
           isValidLogin = false;
           setErrors((state) => [...state, "Invalid Email"]);
+        }
+      } else {
+        if (!isValidPhone(username)) {
+          isValidLogin = false;
+          setErrors((state) => [...state, "Invalid Phone"]);
         }
       }
       if (singleotp.length < 6) {
@@ -67,7 +74,11 @@ const SignIn = () => {
         setErrors((state) => [...state, "Invalid Email"]);
       }
     } else {
-      sendOtp(username, false);
+      if (isValidPhone(username)) {
+        await sendOtp(username, false);
+      } else {
+        setErrors((state) => [...state, "Invalid Phone"]);
+      }
     }
   }
 
@@ -77,6 +88,7 @@ const SignIn = () => {
     if (isEmail) {
       status = await sendEmailOtp({ email: input });
     } else {
+      status = await sendPhoneOtp({ phone: input });
     }
     setFetchingOtp(false);
     if (status) {

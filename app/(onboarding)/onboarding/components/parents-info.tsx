@@ -3,9 +3,12 @@ import OtpTimer from "@/app/(landing)/components/otptimer";
 import DataLoader from "@/app/components/DataLoader";
 import createCandidateParent from "@/app/data/createCandidateParent";
 import sendEmailOtp from "@/app/data/emailotp";
+import sendPhoneOtp from "@/app/data/phoneotp";
 import updateOnboarding from "@/app/data/updateOnboarding";
 import verifyEmailOtp from "@/app/data/verifyEmailOtp";
+import verifyPhoneOtp from "@/app/data/verifyPhoneOtp";
 import { isValidEmail } from "@/app/utilities/checkemail";
+import isValidPhone from "@/app/utilities/checkphone";
 import {
   CheckBadgeIcon,
   ExclamationCircleIcon,
@@ -25,7 +28,7 @@ const ParentInfoSchmema = yup.object().shape({
 });
 
 const ParentsInfo = ({ showNext }) => {
-  const [parentEmail, setUserEmail] = useState("");
+  const [parentEmail, setParentEmail] = useState("");
   const [emailverified, setEmailVerified] = useState("");
   const [otpEmailMode, setOtpEmailMode] = useState(false);
   const [mailOtpResend, setMailOtpResend] = useState(false);
@@ -34,13 +37,23 @@ const ParentsInfo = ({ showNext }) => {
   const [mailOtpError, setMailOtpError] = useState("");
   const [mailOtp, setMailOtp] = useState("");
 
-  const [phoneverified, setPhoneVerified] = useState(
-    "2023-09-18T11:02:49.979Z"
-  );
+  const [parentPhone, setParentPhone] = useState("");
+  const [phoneverified, setPhoneVerified] = useState("");
+  const [otpPhoneMode, setOtpPhoneMode] = useState(false);
+  const [phoneOtpResend, setPhoneOtpResend] = useState(false);
+  const [phoneOtpVerifying, setPhoneOtpVerifying] = useState(false);
+  const [phoneOtpFetching, setPhoneOtpFetching] = useState(false);
+  const [phoneOtpError, setPhoneOtpError] = useState("");
+  const [phoneOtp, setPhoneOtp] = useState("");
 
   function emailOnChange(e) {
-    setUserEmail(e.target.value);
+    setParentEmail(e.target.value);
     setEmailVerified("");
+  }
+
+  function phoneOnChange(e) {
+    setParentPhone(e.target.value);
+    setPhoneVerified("");
   }
 
   async function sendMailOtp(e) {
@@ -58,6 +71,21 @@ const ParentsInfo = ({ showNext }) => {
     }
   }
 
+  async function sendPhoneNoOtp(e) {
+    if (isValidPhone(parentPhone)) {
+      setPhoneOtpError("");
+      setPhoneOtpFetching(true);
+      let status = await sendPhoneOtp({ phone: parentPhone });
+      setPhoneOtpFetching(false);
+      if (status) {
+        setOtpTimer();
+        setOtpPhoneMode(true);
+      }
+    } else {
+      setPhoneOtpError("Invalid Phone");
+    }
+  }
+
   async function verifyEmail(e) {
     e.preventDefault();
     setMailOtpVerifying(true);
@@ -71,6 +99,21 @@ const ParentsInfo = ({ showNext }) => {
       clearErrors("emailverified");
     } else {
       setMailOtpError("Verification Failed");
+    }
+  }
+
+  async function verifyPhone(e) {
+    e.preventDefault();
+    setPhoneOtpVerifying(true);
+    const status = await verifyPhoneOtp({ phone: parentPhone, otp: phoneOtp });
+    setPhoneOtpVerifying(false);
+    if (status) {
+      setPhoneVerified(new Date().toISOString());
+      setPhoneOtpError("");
+      setOtpPhoneMode(false);
+      setPhoneOtpResend(false);
+    } else {
+      setPhoneOtpError("Verification Failed");
     }
   }
 
@@ -276,35 +319,112 @@ const ParentsInfo = ({ showNext }) => {
               >
                 Phone
               </label>
-              <div className="relative mt-2 rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 flex items-center">
-                  <label htmlFor="country" className="sr-only">
-                    Country
-                  </label>
-                  <select
-                    id="phonecode"
-                    {...register("phonecode")}
-                    className="h-full rounded-md border-0 bg-transparent py-0 pl-3 pr-7 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm"
-                  >
-                    <option value="+91">+91</option>
-                  </select>
+              <div className="flex gap-2">
+                <div className="relative mt-2 rounded-md shadow-sm">
+                  <div className="absolute inset-y-0 left-0 flex items-center">
+                    <label htmlFor="country" className="sr-only">
+                      Country
+                    </label>
+                    <select
+                      id="phonecode"
+                      {...register("phonecode")}
+                      className="h-full rounded-md border-0 bg-transparent py-0 pl-3 pr-7 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm"
+                    >
+                      <option value="+91">+91</option>
+                    </select>
+                  </div>
+                  <Controller
+                    control={control}
+                    name="phone"
+                    render={({ field }) => (
+                      <input
+                        type="text"
+                        {...field}
+                        value={parentPhone}
+                        disabled={phoneverified != ""}
+                        onChange={(e) => {
+                          phoneOnChange(e);
+                          field.onChange(e);
+                        }}
+                        className="block pl-20 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                      />
+                    )}
+                  />
+                  {(errors["phone"] || errors["phoneverified"]) && (
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                      <ExclamationCircleIcon
+                        className="h-5 w-5 text-red-500"
+                        aria-hidden="true"
+                      />
+                    </div>
+                  )}
                 </div>
-                <input
-                  type="text"
-                  {...register("phone")}
-                  id="phone"
-                  className="block w-full rounded-md border-0 py-1.5 pl-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
-                  placeholder="Enter Phone"
-                />
-                {(errors["phone"] || errors["phoneverified"]) && (
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                    <ExclamationCircleIcon
+                <div className="self-center mt-2">
+                  {phoneverified != "" ? (
+                    <CheckBadgeIcon
+                      className="h-5 w-5 text-green-500"
+                      aria-hidden="true"
+                    />
+                  ) : otpPhoneMode ? (
+                    <ExclamationTriangleIcon
                       className="h-5 w-5 text-red-500"
                       aria-hidden="true"
                     />
-                  </div>
-                )}
+                  ) : phoneOtpFetching ? (
+                    <DataLoader size="xs" />
+                  ) : (
+                    <Link
+                      href="#"
+                      onClick={sendPhoneNoOtp}
+                      className="text-sm font-semibold text-pink-600 hover:text-pink-500"
+                    >
+                      Verify
+                    </Link>
+                  )}
+                </div>
               </div>
+              {otpPhoneMode && (
+                <div className="py-2 text-sm">
+                  <div className="py-4 text-right">
+                    {phoneOtpResend ? (
+                      phoneOtpFetching ? (
+                        <DataLoader size="xs" />
+                      ) : (
+                        <Link
+                          href="#"
+                          onClick={sendPhoneNoOtp}
+                          className="text-sm font-semibold text-pink-600 hover:text-pink-500"
+                        >
+                          Resend
+                        </Link>
+                      )
+                    ) : (
+                      <OtpTimer />
+                    )}
+                  </div>
+                  <div className="flex items-baseline gap-2">
+                    <input
+                      type="text"
+                      value={phoneOtp}
+                      onChange={(e) => setPhoneOtp(e.target.value)}
+                      placeholder="Otp to verify Phone"
+                      className="flex-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                    />
+                    <button
+                      type="button"
+                      onClick={verifyPhone}
+                      className="rounded-md border border-pink-600 px-3 py-2 text-sm font-semibold text-pink-600 shadow-sm hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+                    >
+                      {phoneOtpVerifying ? "Verifying..." : "Verify"}
+                    </button>
+                  </div>
+                </div>
+              )}
+              {phoneOtpError === "" ? null : (
+                <p className="mt-2 text-sm text-red-600" id="email-error">
+                  {phoneOtpError}
+                </p>
+              )}
               {(errors["phone"] || errors["phoneverified"]) && (
                 <p className="mt-2 text-sm text-red-600" id="email-error">
                   {errors["phone"]

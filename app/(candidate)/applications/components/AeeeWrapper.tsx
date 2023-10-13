@@ -6,7 +6,7 @@ import ProgramSelection from "./program-selection";
 import CityJee from "./exam-cityjee";
 
 const AeeeWrapper = ({ application }) => {
-  const [step, setStep] = useState(application.ExamApplicationProgress.current);
+  const [step, setStep] = useState(1);
 
   console.log(application);
 
