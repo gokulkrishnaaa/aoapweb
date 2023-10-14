@@ -135,6 +135,7 @@ const PersonalInfo = ({ showNext, user }) => {
     handleSubmit,
     control,
     clearErrors,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: async (data, context, options) => {
@@ -150,15 +151,34 @@ const PersonalInfo = ({ showNext, user }) => {
   });
 
   const onSubmit = async (data) => {
-    console.log("submit data");
-
-    const res = await createCandidate(data);
-    if (res) {
-      const onboarding = await updateOnboarding({
-        data: { current: 2 },
-        candidate: { email: res.email, photoid: res.photoid },
-      });
-      showNext();
+    clearErrors("emailverified");
+    clearErrors("phoneverified");
+    const isEmailVerified = emailverified != "";
+    const isPhoneVerified = phoneverified != "";
+    if (isEmailVerified && isPhoneVerified) {
+      const res = await createCandidate(data);
+      if (res) {
+        const onboarding = await updateOnboarding({
+          data: { current: 2 },
+          candidate: { email: res.email, photoid: res.photoid },
+        });
+        showNext();
+      } else {
+        console.log(res);
+      }
+    } else {
+      if (!isEmailVerified) {
+        setError("emailverified", {
+          type: "custom",
+          message: "Email is not verified",
+        });
+      }
+      if (!isPhoneVerified) {
+        setError("phoneverified", {
+          type: "custom",
+          message: "Phone is not verified",
+        });
+      }
     }
   };
 
@@ -202,6 +222,7 @@ const PersonalInfo = ({ showNext, user }) => {
       setMailOtpError("");
       setOtpEmailMode(false);
       setMailOtpResend(false);
+      clearErrors("emailverified");
     } else {
       setMailOtpError("Verification Failed");
     }
@@ -217,6 +238,7 @@ const PersonalInfo = ({ showNext, user }) => {
       setPhoneOtpError("");
       setOtpPhoneMode(false);
       setPhoneOtpResend(false);
+      clearErrors("phoneverified");
     } else {
       setPhoneOtpError("Verification Failed");
     }
