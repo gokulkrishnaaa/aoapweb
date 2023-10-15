@@ -24,7 +24,7 @@ export default function ApplicationStats({ application }) {
               <p className="text-sm font-medium text-gray-600">
                 {application.Registration.length === 0
                   ? "Registration Pending"
-                  : `Registration No: 33444`}
+                  : `Registration No: ${application.Registration[0].registrationNo}`}
               </p>
             </div>
           </div>

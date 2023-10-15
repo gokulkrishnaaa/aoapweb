@@ -5,9 +5,10 @@ import React from "react";
 
 const ParentInfo = () => {
   const { data: parentInfo, isLoading } = useQuery({
-    queryKey: ["profile"],
+    queryKey: ["candidate", "parent"],
     queryFn: () => getCandidateParent(),
   });
+  console.log("parentInfo", parentInfo);
 
   return (
     <div>

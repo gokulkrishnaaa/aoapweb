@@ -5,7 +5,7 @@ import React from "react";
 
 const PlusTwo = () => {
   const { data: plusttwo, isLoading } = useQuery({
-    queryKey: ["profile"],
+    queryKey: ["candidate", "plustwo"],
     queryFn: () => getCandidatePlustwo(),
   });
   return (

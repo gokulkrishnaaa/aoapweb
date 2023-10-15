@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 import AeeeWrapper from "../components/AeeeWrapper";
 import AeeeRegistration from "../components/aeeeregistration";
+import BreadCrumbs from "../../components/breadcrumbs";
 
 const Page = async ({ params }) => {
   let application = await getApplicationById({ applicationid: params.applnid });
@@ -12,9 +13,19 @@ const Page = async ({ params }) => {
   }
 
   if (application.status === "PENDING") {
-    return <AeeeWrapper application={application} />;
+    return (
+      <>
+        <BreadCrumbs />
+        <AeeeWrapper application={application} />
+      </>
+    );
   } else if (application.status === "APPLIED") {
-    return <AeeeRegistration application={application} />;
+    return (
+      <>
+        <BreadCrumbs />
+        <AeeeRegistration application={application} />
+      </>
+    );
   } else if (
     application.status === "REGISTERED" ||
     application.status === "SLOT" ||

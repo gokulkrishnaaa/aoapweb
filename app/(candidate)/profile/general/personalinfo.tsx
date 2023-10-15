@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import DataLoader from "@/app/components/DataLoader";
 const PersonalInfo = () => {
   const { data: candidate, isLoading } = useQuery({
-    queryKey: ["profile"],
+    queryKey: ["candidate"],
     queryFn: () => getCandidate(),
   });
 

@@ -6,7 +6,7 @@ import React from "react";
 
 const ContactAddress = () => {
   const { data: candidate, isLoading } = useQuery({
-    queryKey: ["profile"],
+    queryKey: ["candidate"],
     queryFn: () => getCandidate(),
   });
   return (
