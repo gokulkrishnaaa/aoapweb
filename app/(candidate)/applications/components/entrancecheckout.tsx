@@ -20,32 +20,26 @@ const EntranceCheckout = ({ product, application }) => {
       amount: product.amount,
     };
 
-    console.log(product);
-
     const txn = await createEntranceTransaction(input);
-    console.log(txn);
 
-    setTxnDetails(txn);
+    console.log("application", application);
+    console.log("product", product);
+    console.log("txn", txn);
+
+    let params = {
+      txnid: txn.txnid,
+      amount: txn.amount,
+      productinfo: txn.description,
+      firstname: application.candidate.fullname,
+      email: application.candidate.email,
+      phone: application.candidate.phone,
+      udf1: application.id,
+    };
+    console.log(params);
+
+    setTxnDetails(params);
     setCreatingTxn(false);
   }
-
-  async function dummyPayment() {
-    const res = await examPaymentSuccess();
-    router.push("/applications");
-  }
-
-  const examPaymentSuccess = async () => {
-    try {
-      const { data } = await apiclient.post(`/api/exam/paymentsuccess`, {
-        txnid: "clnrk60bk0001hq4csx6o72d9",
-        result: "success",
-      });
-      return data;
-    } catch (error) {
-      const { data } = error.response;
-      return data;
-    }
-  };
 
   return (
     <div>

@@ -15,8 +15,8 @@ const Page = async ({ params }) => {
   // get product by code
   const product = await getProductByCode("aeeeentrance");
   // create the form to submit to payment gateway
-  console.log("product", product);
-  console.log(application);
+  //   console.log("product", product);
+  //   console.log(application);
 
   return (
     <div>
