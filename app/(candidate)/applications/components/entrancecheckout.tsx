@@ -38,7 +38,6 @@ const EntranceCheckout = ({ product, application }) => {
     console.log(params);
 
     setTxnDetails(params);
-    setCreatingTxn(false);
   }
 
   return (

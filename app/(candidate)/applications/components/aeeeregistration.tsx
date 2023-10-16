@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { useRouter } from "next/navigation";
 import CompleteRegistration from "./completeregistration";
+import EntranceTotalPayments from "./entrancetotalpayments";
 
 export default function AeeeRegistration({ application }) {
   const router = useRouter();
@@ -135,6 +136,9 @@ export default function AeeeRegistration({ application }) {
             </div>
           </dl>
         </div>
+        {registration ? (
+          <EntranceTotalPayments application={application} />
+        ) : null}
       </div>
     </>
   );
