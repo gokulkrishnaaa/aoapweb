@@ -8,6 +8,8 @@ const PayProcessingForm = ({ txndetails }) => {
   const key = "aJ1WVm";
   const salt = "hKmYSMBAzg5QOw64IV9MFtcu6BKaIyYA";
   const hash = generateHash(txndetails, salt);
+  const surl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/exam/paymentsuccess`;
+  const furl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/exam/paymentfailure`;
 
   function generateHash(input, salt) {
     let hashString =
@@ -60,16 +62,8 @@ const PayProcessingForm = ({ txndetails }) => {
       <input type="hidden" name="email" value={txndetails.email} />
       <input type="hidden" name="phone" value={txndetails.phone} />
       <input type="hidden" name="udf1" value={txndetails.udf1} />
-      <input
-        type="hidden"
-        name="surl"
-        value="http://amritha.edu/api/exam/paymentsuccess"
-      />
-      <input
-        type="hidden"
-        name="furl"
-        value="http://amritha.edu/api/exam/paymentfailure"
-      />
+      <input type="hidden" name="surl" value={surl} />
+      <input type="hidden" name="furl" value={furl} />
       <input type="hidden" name="hash" value={hash} />
     </form>
   );
