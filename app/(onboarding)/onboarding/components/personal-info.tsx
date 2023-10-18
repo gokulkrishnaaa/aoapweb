@@ -157,14 +157,19 @@ const PersonalInfo = ({ showNext, user }) => {
     const isPhoneVerified = phoneverified != "";
     if (isEmailVerified && isPhoneVerified) {
       const res = await createCandidate(data);
-      if (res) {
+      if (!res.errors) {
         const onboarding = await updateOnboarding({
           data: { current: 2 },
           candidate: { email: res.email, photoid: res.photoid },
         });
         showNext();
       } else {
-        console.log(res);
+        res.errors.forEach((error) => {
+          setError(error.field, {
+            type: "custom",
+            message: error.message,
+          });
+        });
       }
     } else {
       if (!isEmailVerified) {
@@ -220,11 +225,13 @@ const PersonalInfo = ({ showNext, user }) => {
     if (status) {
       setEmailVerified(new Date().toISOString());
       setMailOtpError("");
+      setMailOtp("");
       setOtpEmailMode(false);
       setMailOtpResend(false);
       clearErrors("emailverified");
     } else {
       setMailOtpError("Verification Failed");
+      setMailOtp("");
     }
   }
 
@@ -236,11 +243,13 @@ const PersonalInfo = ({ showNext, user }) => {
     if (status) {
       setPhoneVerified(new Date().toISOString());
       setPhoneOtpError("");
+      setPhoneOtp("");
       setOtpPhoneMode(false);
       setPhoneOtpResend(false);
       clearErrors("phoneverified");
     } else {
       setPhoneOtpError("Verification Failed");
+      setPhoneOtp("");
     }
   }
 
@@ -265,6 +274,11 @@ const PersonalInfo = ({ showNext, user }) => {
             Enter your address if you wish to get the brochure and career
             guidance kit.
           </p>
+          {errors["server"] && (
+            <p className="mt-2 text-sm text-red-600" id="email-error">
+              {errors["server"].message}
+            </p>
+          )}
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
@@ -423,7 +437,6 @@ const PersonalInfo = ({ showNext, user }) => {
                         type="text"
                         {...field}
                         value={userEmail}
-                        disabled={emailverified != ""}
                         onChange={(e) => {
                           emailOnChange(e);
                           field.onChange(e);
@@ -549,7 +562,6 @@ const PersonalInfo = ({ showNext, user }) => {
                         type="text"
                         {...field}
                         value={userPhone}
-                        disabled={phoneverified != ""}
                         onChange={(e) => {
                           phoneOnChange(e);
                           field.onChange(e);
