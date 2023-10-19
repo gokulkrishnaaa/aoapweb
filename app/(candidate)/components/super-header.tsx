@@ -23,6 +23,8 @@ const SuperHeader = ({ user }) => {
   const pathname = fullPath.split("/")[1];
   const router = useRouter();
 
+  console.log(user);
+
   async function handleSignout(e) {
     e.preventDefault();
     await signOut();
@@ -178,7 +180,7 @@ const SuperHeader = ({ user }) => {
                 </div>
                 <div className="ml-3">
                   <div className="text-base font-medium text-white">
-                    Put Name
+                    {/* Put Name */}
                   </div>
                   <div className="text-sm font-medium text-pink-200">
                     {user.email}

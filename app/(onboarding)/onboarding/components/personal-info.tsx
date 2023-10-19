@@ -286,7 +286,7 @@ const PersonalInfo = ({ showNext, user }) => {
                 htmlFor="fullname"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Full Name
+                Full Name (As in 10th class certificate)
               </label>
               <div className="relative mt-2">
                 <input

@@ -16,6 +16,7 @@ const Page = async ({ params }) => {
     return (
       <>
         <BreadCrumbs />
+        <div className="h-5"></div>
         <AeeeWrapper application={application} />
       </>
     );
@@ -23,6 +24,7 @@ const Page = async ({ params }) => {
     return (
       <>
         <BreadCrumbs />
+        <div className="h-5"></div>
         <AeeeRegistration application={application} />
       </>
     );

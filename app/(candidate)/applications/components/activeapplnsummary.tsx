@@ -26,7 +26,8 @@ const ActiveApplicationSummary = ({ entrance }) => {
         <div className="bg-white shadow rounded-md sm:rounded-lg pt-1">
           <div className="px-4 py-5 sm:p-6">
             <h2 className="text-base font-semibold leading-6 text-gray-900">
-              {entrance.code.toUpperCase()} - {entrance.name}
+              {entrance.code.toUpperCase()} - {entrance.name}{" "}
+              {entrance.Exam[0].description}
             </h2>
             <div className="mt-2 sm:flex sm:items-start sm:justify-between">
               <div className="max-w-xl text-sm text-gray-500">

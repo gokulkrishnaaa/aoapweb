@@ -1,7 +1,10 @@
 import Link from "next/link";
 
 const stats = [
-  { label: "Slot Pending", value: 12 },
+  {
+    label: "Slot Pending (to start only before 1 week of the examination)",
+    value: 12,
+  },
   { label: "Admit Card Pending", value: 4 },
   { label: "Rank Not Published", value: 2 },
 ];
@@ -19,7 +22,7 @@ export default function ApplicationStats({ application }) {
               <p className="text-xl font-bold text-gray-900 sm:text-2xl">
                 {`${application.exam.entrance.code.toUpperCase()} - ${
                   application.exam.entrance.name
-                }`}
+                } ${application.exam.description}`}
               </p>
               <p className="text-sm font-medium text-gray-600">
                 {application.Registration.length === 0

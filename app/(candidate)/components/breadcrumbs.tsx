@@ -2,12 +2,12 @@
 import { ChevronRightIcon, HomeIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import v from "voca";
 export default function BreadCrumbs() {
   const pathname = usePathname();
   const crumbs = pathname.split("/");
-  if (crumbs[2] === "aeee") {
-    crumbs[3] = "application";
+  if (crumbs[1] === "applications") {
+    crumbs[2] = `no : ${crumbs[2]}`;
   }
 
   return (
@@ -34,7 +34,7 @@ export default function BreadCrumbs() {
                   aria-hidden="true"
                 />
                 <p className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">
-                  {crumb}
+                  {v.capitalize(crumb)}
                 </p>
               </div>
             </li>

@@ -58,7 +58,11 @@ const AcademicInfo = () => {
             Academic Information
           </h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
-            Enter the state where you attended 12th Standard.
+            <em>
+              <b>*</b> Note to indicate that the responsibility of entering the
+              correct data lies with the candidate and university will not be
+              responsible for not getting communication if wrong data is entered
+            </em>
           </p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
