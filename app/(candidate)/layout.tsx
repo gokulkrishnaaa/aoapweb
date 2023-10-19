@@ -10,8 +10,8 @@ import TanStackProvider from "../components/tanstackprovides";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Amrita Candiate",
-  description: "Amrita Candiate",
+  title: "AOAP",
+  description: "Amrita Entrance Examination",
 };
 
 export default async function CandidateLayout({
