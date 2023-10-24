@@ -8,8 +8,6 @@ import CityJee from "./exam-cityjee";
 const AeeeWrapper = ({ application }) => {
   const [step, setStep] = useState(1);
 
-  console.log(application);
-
   function nextStep() {
     setStep((state) => state + 1);
   }
@@ -22,13 +20,6 @@ const AeeeWrapper = ({ application }) => {
       <div className="h-6"></div>
       <section>
         {step === 1 && (
-          <ProgramSelection
-            nextStep={nextStep}
-            step={step}
-            application={application}
-          />
-        )}
-        {step === 2 && (
           <CityJee
             previousStep={previousStep}
             nextStep={nextStep}
@@ -36,7 +27,7 @@ const AeeeWrapper = ({ application }) => {
             application={application}
           />
         )}
-        {step === 3 && (
+        {step === 2 && (
           <AeeeSubmit
             previousStep={previousStep}
             step={step}

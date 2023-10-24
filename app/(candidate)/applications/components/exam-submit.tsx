@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import ApplicationConfirmation from "./applicationconfirmation";
 import { useState } from "react";
+import DataLoader from "@/app/components/DataLoader";
 
 export default function AeeeSubmit({ previousStep, step, application }) {
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function AeeeSubmit({ previousStep, step, application }) {
 
   const { data: applicationCities, isLoading: applicationCitiesLoading } =
     useQuery({
-      queryKey: ["cities", application.id],
+      queryKey: ["applicationcities", application.id],
       queryFn: () => getCityByApplication(application.id),
     });
 
@@ -29,12 +30,6 @@ export default function AeeeSubmit({ previousStep, step, application }) {
     queryKey: ["application", application.id, "jee"],
     queryFn: () => getApplicationJeeStatus(application.id),
   });
-
-  const { data: selectedProgrammes, isLoading: selProgrammesLoading } =
-    useQuery({
-      queryKey: ["application", application.id, "programme"],
-      queryFn: () => getProgrammesByApplication(application.id),
-    });
 
   async function submitApplication() {
     setShowConfirmation(true);
@@ -59,7 +54,7 @@ export default function AeeeSubmit({ previousStep, step, application }) {
             Preview your application
           </h3>
           <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-            Details once submitted cannot be edited. Please check carefully.
+            Please check carefully.
           </p>
         </div>
         <div className="mt-6 border-t border-gray-200">
@@ -78,7 +73,7 @@ export default function AeeeSubmit({ previousStep, step, application }) {
               </dt>
               <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                 {applicationCitiesLoading ? (
-                  <p>Loading ...</p>
+                  <DataLoader size="lg" />
                 ) : applicationCities.length < 1 ? (
                   <p>No cities selected</p>
                 ) : (
@@ -94,7 +89,7 @@ export default function AeeeSubmit({ previousStep, step, application }) {
                         <div className="flex w-0 flex-1 items-center">
                           <div className="ml-4 flex min-w-0 flex-1 gap-2">
                             <span className="truncate">
-                              {city.examcity.name}
+                              {city.examcity.city.name}
                             </span>
                           </div>
                         </div>
@@ -110,43 +105,11 @@ export default function AeeeSubmit({ previousStep, step, application }) {
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                 {jeeStatusLoading ? (
-                  <p>Loading...</p>
+                  <DataLoader size="lg" />
                 ) : jeestatus.jee ? (
                   "Yes"
                 ) : (
                   "No"
-                )}
-              </dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
-                Selected Programs
-              </dt>
-              <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                {selProgrammesLoading ? (
-                  <p>Loading ...</p>
-                ) : selectedProgrammes.length < 1 ? (
-                  <p>No programmes selected</p>
-                ) : (
-                  <ul
-                    role="list"
-                    className="divide-y divide-gray-100 rounded-md border border-gray-200"
-                  >
-                    {selectedProgrammes.map((programme) => (
-                      <li
-                        key={programme.id}
-                        className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"
-                      >
-                        <div className="flex w-0 flex-1 items-center">
-                          <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                            <span className="truncate">
-                              {`${programme.programme.course.name} - ${programme.programme.campus.name}`}
-                            </span>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
                 )}
               </dd>
             </div>

@@ -6,9 +6,8 @@ interface Step {
 }
 
 const steps: Step[] = [
-  { step: 1, name: "Program Selection" },
-  { step: 2, name: "City and JEE" },
-  { step: 3, name: "Preview and Submit" },
+  { step: 1, name: "Select Preferences" },
+  { step: 2, name: "Preview and Submit" },
 ];
 
 export default function ApplySteps({ stepId }) {

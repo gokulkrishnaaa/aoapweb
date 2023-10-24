@@ -1,6 +1,8 @@
 import apiclient from "@/app/utilities/createclient";
 
 export const addCityForEntrance = async (input) => {
+  console.log(input);
+
   try {
     const { data } = await apiclient.post(`/api/master/examcity`, input);
     return data;
@@ -20,9 +22,11 @@ export const updateCityForEntrance = async ({ id, input }) => {
   }
 };
 
-export const removeCityForEntrance = async (id) => {
+export const removeCityForEntrance = async ({ entranceId, cityId }) => {
   try {
-    const { data } = await apiclient.delete(`/api/master/examcity/${id}`);
+    const { data } = await apiclient.delete(
+      `/api/master/examcity/${entranceId}/${cityId}`
+    );
     return data;
   } catch (error) {
     const { data } = error.response;

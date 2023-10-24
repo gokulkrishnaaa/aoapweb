@@ -1,22 +1,28 @@
 "use client";
 import {
+  addCityToApplication,
   getApplicationJeeStatus,
   getCityByApplication,
   getProgrammesByApplication,
+  removeCityFromApplication,
+  updateApplicationJeeStatus,
 } from "@/app/data/applicationclient";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { useRouter } from "next/navigation";
 import CompleteRegistration from "./completeregistration";
 import EntranceTotalPayments from "./entrancetotalpayments";
+import DataLoader from "@/app/components/DataLoader";
+import ApplicationCities from "./applicationcity";
+import ToggleSwitch from "./toggleswitch";
 
 export default function AeeeRegistration({ application }) {
-  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { data: applicationCities, isLoading: applicationCitiesLoading } =
     useQuery({
-      queryKey: ["cities", application.id],
+      queryKey: ["applncities", application.id],
       queryFn: () => getCityByApplication(application.id),
     });
 
@@ -25,17 +31,95 @@ export default function AeeeRegistration({ application }) {
     queryFn: () => getApplicationJeeStatus(application.id),
   });
 
-  const { data: selectedProgrammes, isLoading: selProgrammesLoading } =
-    useQuery({
-      queryKey: ["application", application.id, "programme"],
-      queryFn: () => getProgrammesByApplication(application.id),
+  const jeeStatusMutation = useMutation({
+    mutationFn: (status) => {
+      return updateApplicationJeeStatus(application.id, status);
+    },
+    onMutate: async (variables) => {
+      const queryKey = ["application", application.id, "jee"];
+      const previousData = queryClient.getQueryData(queryKey);
+
+      const updatedData = { ...previousData, jee: variables };
+
+      queryClient.setQueryData(queryKey, updatedData);
+
+      const rollback = () => {
+        queryClient.setQueryData(queryKey, previousData);
+      };
+      return { rollback };
+    },
+    onError: (error, variables, context) => {
+      context.rollback();
+    },
+    onSuccess: (data, variables, context) => {
+      context.rollback();
+      queryClient.setQueryData(["application", application.id, "jee"], data);
+    },
+    onSettled: (data, error, variables, context) => {
+      queryClient.invalidateQueries(["application", application.id, "jee"]);
+    },
+  });
+
+  function changeJeeStatus(status) {
+    jeeStatusMutation.mutate(status);
+  }
+
+  const { mutate: cityremovemutate, isLoading: cityremoveloading } =
+    useMutation({
+      mutationFn: (city) => {
+        return removeCityFromApplication(application.id, city.examcityId);
+      },
+      onMutate: async (applicationcity) => {
+        const queryKey = ["applncities", application.id];
+        const previousData = queryClient.getQueryData(queryKey);
+
+        const updatedData = previousData.filter(
+          (item) => item.id != applicationcity.id
+        );
+
+        queryClient.setQueryData(queryKey, updatedData);
+
+        const rollback = () => {
+          queryClient.setQueryData(queryKey, previousData);
+        };
+        return { rollback };
+      },
+      onError: (error, variables, context) => {
+        context.rollback();
+      },
+      onSuccess(data, variables, context) {
+        const { message } = data;
+        if (message != "success") {
+          context.rollback();
+        }
+      },
+      onSettled: (data, error, variables, context) => {
+        queryClient.invalidateQueries(["applncities", application.id]);
+      },
     });
+
+  function removeCity(city) {
+    cityremovemutate(city);
+  }
+
+  const { mutate: cityaddmutate, isLoading: cityaddloading } = useMutation({
+    mutationFn: (id) => {
+      return addCityToApplication(application.id, id);
+    },
+    onSettled: (data, error, variables, context) => {
+      queryClient.invalidateQueries(["applncities", application.id]);
+    },
+  });
+
+  function addCity(id) {
+    cityaddmutate(id);
+  }
 
   const registration = application.Registration[0];
 
   return (
     <>
-      <div className="mt-10 mx-auto max-w-md sm:max-w-4xl">
+      <div className="mt-10 mx-auto max-w-md sm:max-w-4xl bg-white rounded-lg py-10 px-8">
         {registration ? (
           <div className="px-4 sm:px-0">
             <h3 className="text-base font-semibold leading-7 text-gray-900">
@@ -58,33 +142,20 @@ export default function AeeeRegistration({ application }) {
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">
-                City
+                City Preferences ( only 3 )
               </dt>
               <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                 {applicationCitiesLoading ? (
-                  <p>Loading ...</p>
-                ) : applicationCities.length < 1 ? (
-                  <p>No cities selected</p>
+                  <DataLoader size="lg" />
                 ) : (
-                  <ul
-                    role="list"
-                    className="divide-y divide-gray-100 rounded-md border border-gray-200"
-                  >
-                    {applicationCities.map((city) => (
-                      <li
-                        key={city.id}
-                        className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"
-                      >
-                        <div className="flex w-0 flex-1 items-center">
-                          <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                            <span className="truncate">
-                              {city.examcity.name}
-                            </span>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                  <ApplicationCities
+                    applicationCities={applicationCities}
+                    removeCity={removeCity}
+                    application={application}
+                    addCity={addCity}
+                    cityaddloading={cityaddloading}
+                    cityremoveloading={cityremoveloading}
+                  />
                 )}
               </dd>
             </div>
@@ -94,43 +165,12 @@ export default function AeeeRegistration({ application }) {
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                 {jeeStatusLoading ? (
-                  <p>Loading...</p>
-                ) : jeestatus.jee ? (
-                  "Yes"
+                  <DataLoader size="lg" />
                 ) : (
-                  "No"
-                )}
-              </dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
-                Selected Programs
-              </dt>
-              <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                {selProgrammesLoading ? (
-                  <p>Loading ...</p>
-                ) : selectedProgrammes.length < 1 ? (
-                  <p>No programmes selected</p>
-                ) : (
-                  <ul
-                    role="list"
-                    className="divide-y divide-gray-100 rounded-md border border-gray-200"
-                  >
-                    {selectedProgrammes.map((programme) => (
-                      <li
-                        key={programme.id}
-                        className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"
-                      >
-                        <div className="flex w-0 flex-1 items-center">
-                          <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                            <span className="truncate">
-                              {`${programme.programme.course.name} - ${programme.programme.campus.name}`}
-                            </span>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                  <ToggleSwitch
+                    initialValue={jeestatus.jee}
+                    changeStatus={changeJeeStatus}
+                  />
                 )}
               </dd>
             </div>

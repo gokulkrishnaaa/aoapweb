@@ -1,5 +1,14 @@
 import apiclient from "@/app/utilities/createclient";
 
+export const getCities = async () => {
+  try {
+    const { data } = await apiclient.get(`/api/master/city`);
+    return data;
+  } catch (error) {
+    return null;
+  }
+};
+
 export const addCity = async (input) => {
   try {
     const { data } = await apiclient.post(`/api/master/city`, input);

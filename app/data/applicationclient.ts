@@ -9,6 +9,17 @@ export async function getExamCities(entranceid) {
   }
 }
 
+export async function getExamCityByState(entranceid, stateId) {
+  try {
+    const { data } = await apiclient.get(
+      `api/master/examcity/${entranceid}/${stateId}`
+    );
+    return data;
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function getProgrammesByApplication(applicationId) {
   try {
     const { data } = await apiclient.get(
