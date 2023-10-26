@@ -9,6 +9,16 @@ export const getCities = async () => {
   }
 };
 
+export const getCityFromState = async (stateId) => {
+  try {
+    const { data } = await apiclient.get(`/api/master/city/state/${stateId}`);
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};
+
 export const addCity = async (input) => {
   try {
     const { data } = await apiclient.post(`/api/master/city`, input);

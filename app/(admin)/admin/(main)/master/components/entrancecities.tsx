@@ -9,6 +9,7 @@ import EntranceCity from "./entrancecity";
 import getStates from "@/app/data/getStates";
 import getDistrictByState from "@/app/data/getDistrictByState";
 import getCityByDistrict from "@/app/data/getCityByDistrict";
+import { getCityFromState } from "@/app/data/admin/city";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -31,23 +32,13 @@ export default function EntranceCities() {
   });
 
   const {
-    data: districts,
-    isLoading: districtsLoading,
-    isFetching: districtsFetching,
-  } = useQuery({
-    queryKey: ["district", stateId],
-    queryFn: () => getDistrictByState(stateId),
-    enabled: !!stateId,
-  });
-
-  const {
     data: cities,
     isLoading: citiesLoading,
     isFetching: citiesFetching,
   } = useQuery({
-    queryKey: ["city", districtId],
-    queryFn: () => getCityByDistrict(districtId),
-    enabled: !!districtId,
+    queryKey: ["city", "state", stateId],
+    queryFn: () => getCityFromState(stateId),
+    enabled: !!stateId,
   });
 
   const {
@@ -132,37 +123,6 @@ export default function EntranceCities() {
                 </select>
               </div>
             </div>
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="first-name"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Select District{" "}
-                {districtsFetching ? (
-                  <Spinner
-                    aria-label="Pink spinner example"
-                    color="pink"
-                    size="sm"
-                  />
-                ) : null}
-              </label>
-              <div className="relative mt-2">
-                <select
-                  onChange={(e) => {
-                    setDistrictId(parseInt(e.target.value));
-                  }}
-                  className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
-                >
-                  <option value="0">--Select--</option>
-                  {districts &&
-                    districts.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
-                </select>
-              </div>
-            </div>
           </div>
         </div>
         <div className="-mx-4 mt-10 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg max-w-2xl">
@@ -173,9 +133,7 @@ export default function EntranceCities() {
               </div>
             </div>
           ) : !cities || !entrancecities ? (
-            <p className="py-10 px-4 text-center">
-              Select Entrance, State and District
-            </p>
+            <p className="py-10 px-4 text-center">Select Entrance and State</p>
           ) : cities.length <= 0 ? (
             <p className="py-10 px-4 text-center">No Cities</p>
           ) : (
