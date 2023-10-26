@@ -5,6 +5,7 @@ import SideBarTwoColumn from "../components/sidebarnav";
 import getAdminUser from "@/app/data/admin/getadminuser";
 import { redirect } from "next/navigation";
 import TanStackProvider from "@/app/components/tanstackprovides";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default async function AdminMainRootLayout({
         <SideBarTwoColumn user={user}>
           <TanStackProvider>{children}</TanStackProvider>
         </SideBarTwoColumn>
+        <ToastContainer autoClose={7000} />
       </body>
     </html>
   );
