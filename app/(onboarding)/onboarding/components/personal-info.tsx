@@ -270,10 +270,6 @@ const PersonalInfo = ({ showNext, user }) => {
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             Personal Information
           </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
-            Enter your address if you wish to get the brochure and career
-            guidance kit.
-          </p>
           {errors["server"] && (
             <p className="mt-2 text-sm text-red-600" id="email-error">
               {errors["server"].message}
@@ -855,6 +851,9 @@ const PersonalInfo = ({ showNext, user }) => {
               >
                 Address Line 1
               </label>
+              <p className="mt-1 text-sm leading-6 text-gray-600">
+                Address to be entered only if the candidate requires brochure
+              </p>
               <div className="mt-2">
                 <input
                   type="text"
