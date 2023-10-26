@@ -19,6 +19,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Confirmation from "../../../components/confirmation";
+import { toast } from "react-toastify";
+import toaststrings from "@/app/utilities/toaststrings";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -80,9 +82,17 @@ export default function SocialStatus() {
   const { mutate: removeMutate, isLoading: removeMutationLoading } =
     useMutation({
       mutationFn: (id) => removeSocialStatus(id),
+      onMutate: (variables) => {
+        return variables;
+      },
       onSettled: async (data, error, variables, context) => {
-        await queryClient.invalidateQueries(["socialstatus"]);
-        setActionQueue((state) => state.filter((item) => item != data.id));
+        if (data.errors) {
+          setActionQueue((state) => state.filter((item) => item != variables));
+          toast(toaststrings["uniquedelete"]);
+        } else {
+          await queryClient.invalidateQueries(["socialstatus"]);
+          setActionQueue((state) => state.filter((item) => item != data.id));
+        }
       },
     });
 

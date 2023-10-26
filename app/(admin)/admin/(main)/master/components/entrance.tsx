@@ -22,6 +22,7 @@ import {
 } from "@/app/data/entranceclient";
 import EntranceEdit from "./entranceedit";
 import { toast } from "react-toastify";
+import toaststrings from "@/app/utilities/toaststrings";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -84,7 +85,7 @@ export default function Entrance() {
       onSettled: async (data, error, variables, context) => {
         if (data.errors) {
           setActionQueue((state) => state.filter((item) => item != variables));
-          toast("Entrance cannot be deleted. Delete Depended Values");
+          toast(toaststrings["uniquedelete"]);
         } else {
           await queryClient.invalidateQueries(["entrance"]);
           setActionQueue((state) => state.filter((item) => item != data.id));

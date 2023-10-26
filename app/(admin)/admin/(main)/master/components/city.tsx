@@ -18,6 +18,8 @@ import Confirmation from "../../../components/confirmation";
 import getStates from "@/app/data/getStates";
 import { Spinner } from "flowbite-react";
 import getDistrictByState from "@/app/data/getDistrictByState";
+import toaststrings from "@/app/utilities/toaststrings";
+import { toast } from "react-toastify";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -104,9 +106,17 @@ export default function City() {
   const { mutate: removeMutate, isLoading: removeMutationLoading } =
     useMutation({
       mutationFn: (id) => removeCity(id),
+      onMutate: (variables) => {
+        return variables;
+      },
       onSettled: async (data, error, variables, context) => {
-        await queryClient.invalidateQueries(["city", districtId]);
-        setActionQueue((state) => state.filter((item) => item != data.id));
+        if (data.errors) {
+          setActionQueue((state) => state.filter((item) => item != variables));
+          toast(toaststrings["uniquedelete"]);
+        } else {
+          await queryClient.invalidateQueries(["city", districtId]);
+          setActionQueue((state) => state.filter((item) => item != data.id));
+        }
       },
     });
 
