@@ -1,11 +1,12 @@
 "use client";
+import DataLoader from "@/app/components/DataLoader";
 import { Spinner } from "flowbite-react";
 import React from "react";
 Spinner;
 const loading = () => {
   return (
     <div className="text-center">
-      <Spinner aria-label="Extra large spinner example" size="xl" />
+      <DataLoader size="xl" />
     </div>
   );
 };
