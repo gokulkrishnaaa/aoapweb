@@ -67,10 +67,19 @@ const ParentsInfo = ({ showNext }) => {
     }
     if (isEmailValid && isPhoneValid) {
       const res = await createCandidateParent(data);
-      const onboarding = await updateOnboarding({
-        data: { current: 3 },
-      });
-      showNext();
+      if (!res.errors) {
+        const onboarding = await updateOnboarding({
+          data: { current: 3 },
+        });
+        showNext();
+      } else {
+        res.errors.forEach((error) => {
+          setError(error.field, {
+            type: "custom",
+            message: error.message,
+          });
+        });
+      }
     }
   };
   return (
