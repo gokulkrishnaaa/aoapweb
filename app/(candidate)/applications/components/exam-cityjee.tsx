@@ -20,6 +20,7 @@ import DataLoader from "@/app/components/DataLoader";
 
 export default function CityJee({ previousStep, nextStep, step, application }) {
   const queryClient = useQueryClient();
+  const [error, setError] = useState("");
 
   const { data: applicationCities, isLoading: applicationCitiesLoading } =
     useQuery({
@@ -117,7 +118,11 @@ export default function CityJee({ previousStep, nextStep, step, application }) {
   }
 
   async function moveNext() {
-    nextStep();
+    if (applicationCities.length === 3) {
+      nextStep();
+    } else {
+      setError("It is mandatory to select 3 cities");
+    }
   }
   async function movePrevious() {
     previousStep();
@@ -132,6 +137,12 @@ export default function CityJee({ previousStep, nextStep, step, application }) {
         <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
           Select cities to appear for exam and your preference to consider JEE.
         </p>
+
+        {error && (
+          <p className="mt-2 text-sm text-red-600" id="email-error">
+            {error}
+          </p>
+        )}
       </div>
       <div className="mt-6 border-t border-gray-200">
         <dl className="divide-y divide-gray-100">
