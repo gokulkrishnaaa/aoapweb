@@ -14,11 +14,6 @@ const navItems = [
     href: "/profile/academic",
     icon: AcademicCapIcon,
   },
-  {
-    name: "Payments",
-    href: "/profile/payments",
-    icon: CurrencyRupeeIcon,
-  },
 ];
 
 function classNames(...classes) {
