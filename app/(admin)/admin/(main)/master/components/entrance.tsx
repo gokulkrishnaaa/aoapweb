@@ -21,6 +21,7 @@ import {
   removeEntrance,
 } from "@/app/data/entranceclient";
 import EntranceEdit from "./entranceedit";
+import { toast } from "react-toastify";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -77,9 +78,17 @@ export default function Entrance() {
   const { mutate: removeMutate, isLoading: removeMutationLoading } =
     useMutation({
       mutationFn: (id) => removeEntrance(id),
+      onMutate: (variables) => {
+        return variables;
+      },
       onSettled: async (data, error, variables, context) => {
-        await queryClient.invalidateQueries(["entrance"]);
-        setActionQueue((state) => state.filter((item) => item != data.id));
+        if (data.errors) {
+          setActionQueue((state) => state.filter((item) => item != variables));
+          toast("Entrance cannot be deleted. Delete Depended Values");
+        } else {
+          await queryClient.invalidateQueries(["entrance"]);
+          setActionQueue((state) => state.filter((item) => item != data.id));
+        }
       },
     });
 
