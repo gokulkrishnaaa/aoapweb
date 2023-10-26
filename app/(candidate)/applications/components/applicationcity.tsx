@@ -43,7 +43,12 @@ const ApplicationCities = ({
   function stateSelected(e) {
     setStateId(e.target.value);
   }
-  console.log("cityaddloading", cityaddloading);
+
+  const isCityAdded = (city) => {
+    return applicationCities.some(
+      (applncity) => applncity.examcity.cityId === city.cityId
+    );
+  };
 
   return (
     <ul
@@ -134,11 +139,15 @@ const ApplicationCities = ({
                       >
                         <option value={0}>--Select--</option>
                         {examcities &&
-                          examcities.map((city) => (
-                            <option key={city.id} value={city.id}>
-                              {city.city.name}
-                            </option>
-                          ))}
+                          examcities.map((city) => {
+                            if (!isCityAdded(city)) {
+                              return (
+                                <option key={city.id} value={city.id}>
+                                  {city.city.name}
+                                </option>
+                              );
+                            }
+                          })}
                       </select>
                     </div>
                   </div>
