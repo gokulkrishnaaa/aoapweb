@@ -10,8 +10,10 @@ import TanStackProvider from "../components/tanstackprovides";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AOAP",
-  description: "Amrita Entrance Examination",
+  title:
+    "Amrita Online Application Portal (AOAP) managed by Directorate of Admissions.",
+  description:
+    "Amrita Online Application Portal (AOAP) managed by Directorate of Admissions.",
 };
 
 export default async function CandidateLayout({

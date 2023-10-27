@@ -168,6 +168,14 @@ export default function CityJee({ previousStep, nextStep, step, application }) {
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">
               Do you want to consider based on the JEE CRL Rank?
+              <p className="text-xs italic">
+                <span className="text-red-700">*</span> JEE details and
+                Percentile shall be entered after the publication of JEE Mains
+                2024 results. The fields will be enabled only after the JEE
+                Mains 2024 results. Candidates who have not submitted the
+                requisite details will not be considered for admission based on
+                JEE CRL Percentile
+              </p>
             </dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
               {jeeStatusLoading ? (

@@ -99,7 +99,7 @@ const ParentsInfo = ({ showNext }) => {
                 htmlFor="fullname"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Full Name
+                Enter the Parent/Guardian Name
               </label>
               <div className="relative mt-2">
                 <input

@@ -718,7 +718,7 @@ const PersonalInfo = ({ showNext, user }) => {
               )}
             </div>
 
-            <div className="sm:col-span-2 sm:col-start-1">
+            <div className="col-span-full">
               <label
                 htmlFor="city"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -732,6 +732,9 @@ const PersonalInfo = ({ showNext, user }) => {
                   />
                 ) : null}
               </label>
+              <p className="text-sm leading-6 text-gray-600 italic">
+                which you belong to
+              </p>
               <div className="mt-2">
                 <Controller
                   name="stateId"
@@ -763,7 +766,7 @@ const PersonalInfo = ({ showNext, user }) => {
               )}
             </div>
 
-            <div className="sm:col-span-2">
+            <div className="sm:col-span-3 sm:col-start-1">
               <label
                 htmlFor="region"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -807,7 +810,7 @@ const PersonalInfo = ({ showNext, user }) => {
               )}
             </div>
 
-            <div className="sm:col-span-2">
+            <div className="sm:col-span-3">
               <label
                 htmlFor="postal-code"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -851,9 +854,6 @@ const PersonalInfo = ({ showNext, user }) => {
               >
                 Address Line 1
               </label>
-              <p className="mt-1 text-sm leading-6 text-gray-600">
-                Address to be entered only if the candidate requires brochure
-              </p>
               <div className="mt-2">
                 <input
                   type="text"
@@ -907,7 +907,7 @@ const PersonalInfo = ({ showNext, user }) => {
                   />
                 )}
                 <CldUploadWidget
-                  uploadPreset="cq5ln4ke"
+                  uploadPreset="cedievmy"
                   options={{
                     sources: ["local"],
                     multiple: false,
@@ -961,7 +961,7 @@ const PersonalInfo = ({ showNext, user }) => {
                   />
                 )}
                 <CldUploadWidget
-                  uploadPreset="cq5ln4ke"
+                  uploadPreset="cedievmy"
                   options={{
                     sources: ["local"],
                     multiple: false,

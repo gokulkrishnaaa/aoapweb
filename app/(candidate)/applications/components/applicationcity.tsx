@@ -84,8 +84,8 @@ const ApplicationCities = ({
               {cityaddloading || cityremoveloading ? (
                 <DataLoader size="lg" />
               ) : (
-                <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-6">
-                  <div className="lg:col-span-3 lg:col-start-1">
+                <div className="grid grid-cols-1 gap-y-6 ">
+                  <div>
                     <label
                       htmlFor="city"
                       className="block text-sm font-medium leading-6 text-gray-900"
@@ -116,7 +116,7 @@ const ApplicationCities = ({
                       </select>
                     </div>
                   </div>
-                  <div className="lg:col-span-3">
+                  <div>
                     <label
                       htmlFor="city"
                       className="block text-sm font-medium leading-6 text-gray-900"
