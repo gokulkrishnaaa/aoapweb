@@ -24,7 +24,7 @@ export default async function Page() {
 
   return (
     <div>
-      <section className="h-screen bg-neutral-200">
+      <section className="relative isolate overflow-hidden h-screen bg-neutral-200">
         <header className="flex bg-pink-800">
           <div className="mx-auto flex text-white flex-col lg:flex-row items-center justify-center gap-3 lg:gap-10 py-5 lg:py-0">
             <div className="lg:order-1 lg:relative lg:top-3 lg:z-10 shadow-lg">
@@ -36,16 +36,16 @@ export default async function Page() {
                 className="rounded-lg"
               />
             </div>
-            <p className="font-semibold uppercase lg:text-lg lg:w-[420px] lg:text-right">
+            <p className="font-semibold uppercase text-sm lg:w-[420px] lg:text-right">
               Amrita - UG Admission - 2024
             </p>
-            <p className="font-semibold lg:order-2 uppercase lg:text-lg lg:w-[420px]">
+            <p className="font-semibold lg:order-2 uppercase text-sm lg:w-[420px]">
               Amrtia Online Admissions Portal (AOAP)
             </p>
           </div>
         </header>
 
-        <div className="h-screen relative isolate overflow-hidden pt-14">
+        <div className="pt-14">
           <Image
             src="/images/amrita-hero-image.jpg"
             width={0}
@@ -54,35 +54,24 @@ export default async function Page() {
             alt=""
             className="absolute inset-0 -z-10 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 -z-10 h-full w-full bg-black opacity-50"></div>
-          <div
-            className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-            aria-hidden="true"
-          >
-            <div
-              className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-              style={{
-                clipPath:
-                  "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-              }}
-            />
-          </div>
-          <div>
-            <SignIn />
-            <div className="max-w-6xl mx-auto mt-20 px-6">
+          <div className="absolute inset-0 -z-10 h-full w-full bg-black opacity-75"></div>
+          <div className="max-w-6xl mx-auto mt-10 px-6 flex flex-col gap-10">
+            <div className="lg:order-1 flex flex-col gap-10">
+              <SignIn />
+              <h2 className="text-4xl text-center font-bold tracking-tight text-white sm:text-6xl">
+                Let your success story start with Amrita
+              </h2>
+            </div>
+            <div>
               <AdmissionSteps />
             </div>
           </div>
-          <div
-            className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-            aria-hidden="true"
-          >
-            <div
-              className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
-              style={{
-                clipPath:
-                  "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-              }}
+          <div className="max-w-6xl mx-auto mt-10 lg:mt-24 px-6 flex flex-col gap-10 lg:gap-20">
+            <Image
+              src="/images/amrita-footer.png"
+              width={1876}
+              height={168}
+              alt=""
             />
           </div>
         </div>

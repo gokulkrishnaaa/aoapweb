@@ -38,7 +38,7 @@ export default function AdmissionSteps() {
     <nav aria-label="Progress">
       <ol
         role="list"
-        className="bg-white divide-y divide-gray-300 rounded-md border border-gray-300 lg:flex lg:divide-y-0"
+        className="divide-y divide-gray-300 rounded-md border border-white lg:flex lg:divide-y-0"
       >
         {steps.map((step, stepIdx) => (
           <li key={step.id} className="relative lg:flex lg:flex-1">
@@ -47,7 +47,7 @@ export default function AdmissionSteps() {
                 <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-pink-600 group-hover:bg-pink-800">
                   <AdmissionIcon Icon={step.icon} />
                 </span>
-                <span className="ml-4 text-sm font-medium text-gray-900">
+                <span className="ml-4 text-sm font-medium text-white">
                   {step.name}
                 </span>
               </span>
@@ -60,7 +60,7 @@ export default function AdmissionSteps() {
                   aria-hidden="true"
                 >
                   <svg
-                    className="h-full w-full text-gray-300"
+                    className="h-full w-full text-white"
                     viewBox="0 0 22 80"
                     fill="none"
                     preserveAspectRatio="none"

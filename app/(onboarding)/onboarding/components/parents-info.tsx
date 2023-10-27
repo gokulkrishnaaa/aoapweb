@@ -90,7 +90,7 @@ const ParentsInfo = ({ showNext }) => {
             Parent’s / Guardians Information
           </h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
-            Enter details of you parent or guardian.
+            Enter details of your parent or guardian.
           </p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
