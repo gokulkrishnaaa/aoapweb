@@ -25,18 +25,18 @@ export default async function Page() {
             <div className="relative top-3 z-10 shadow-lg">
               <Image
                 src="/images/Amritalogo.png"
-                width={200}
-                height={50}
+                width={300}
+                height={10}
                 alt=""
-                className="rounded-lg"
+                className="rounded-lg w-52 sm:w-72"
               />
             </div>
           </div>
         </header>
 
-        <div className="relative isolate py-14">
+        <div className="relative isolate py-3">
           <Image
-            src="/images/amrita-hero-image.jpg"
+            src="/images/aee-hero-bg1.jpg"
             width={0}
             height={0}
             sizes="100vw"
@@ -45,6 +45,14 @@ export default async function Page() {
           />
           <div className="absolute inset-0 -z-10 h-full w-full bg-black opacity-75"></div>
           <div className="max-w-6xl mx-auto mt-10 px-6 flex flex-col gap-10">
+            <div className="max-w-xl mx-auto px-6 flex flex-col">
+              <Image
+                src="/images/amrita-footer.png"
+                width={1000}
+                height={168}
+                alt=""
+              />
+            </div>
             <div className="space-y-5">
               <h2 className="text-2xl text-center font-bold tracking-tight text-white sm:text-4xl">
                 Directorate of Admissions & Academic Outreach
@@ -59,16 +67,8 @@ export default async function Page() {
             <div>
               <SignIn />
             </div>
-            <div className="mt-10">
+            <div className="my-10">
               <AdmissionSteps />
-            </div>
-            <div className="max-w-6xl mx-auto px-6 flex flex-col">
-              <Image
-                src="/images/amrita-footer.png"
-                width={1876}
-                height={168}
-                alt=""
-              />
             </div>
           </div>
         </div>

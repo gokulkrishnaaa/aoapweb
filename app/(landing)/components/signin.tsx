@@ -145,13 +145,12 @@ const SignIn = () => {
   }, [activeOtpIndex]);
   return (
     <div className="flex flex-1 flex-col justify-center px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-white uppercase">
-          Sign in
-        </h2>
-      </div>
-
       <div className="border-b border-gray-200 rounded-lg shadow bg-white px-4 py-5 sm:px-6 mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm mb-3">
+          <h2 className="text-center text-xl font-bold leading-9 tracking-tight text-gray-900 uppercase">
+            Sign in
+          </h2>
+        </div>
         <form className="space-y-6" onSubmit={handleSubmit}>
           {errors.map((error, i) => (
             <p key={i} className="mt-2 text-sm text-red-600">
@@ -248,6 +247,14 @@ const SignIn = () => {
             </button>
           </div>
         </form>
+        <div className="mt-5 text-center">
+          <Link
+            href="#admissioninstructions"
+            className="font-semibold text-pink-600"
+          >
+            Click for instructions <span aria-hidden="true">&rarr;</span>
+          </Link>
+        </div>
       </div>
     </div>
   );

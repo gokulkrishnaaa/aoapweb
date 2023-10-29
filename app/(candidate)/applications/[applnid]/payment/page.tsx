@@ -14,13 +14,14 @@ const Page = async ({ params }) => {
   }
   // get product by code
   const product = await getProductByCode("aeeeentrance");
+
   // create the form to submit to payment gateway
   //   console.log("product", product);
   //   console.log(application);
 
   return (
     <div>
-      <BreadCrumbs />
+      <BreadCrumbs application={application} />
       <div className="mt-10 mx-auto max-w-md sm:max-w-4xl">
         <EntranceCheckout product={product} application={application} />
       </div>

@@ -15,7 +15,7 @@ const Page = async ({ params }) => {
   if (application.status === "PENDING") {
     return (
       <>
-        <BreadCrumbs />
+        <BreadCrumbs application={application} />
         <div className="h-5"></div>
         <AeeeWrapper application={application} />
       </>
@@ -23,7 +23,7 @@ const Page = async ({ params }) => {
   } else if (application.status === "APPLIED") {
     return (
       <>
-        <BreadCrumbs />
+        <BreadCrumbs application={application} />
         <div className="h-5"></div>
         <AeeeRegistration application={application} />
       </>

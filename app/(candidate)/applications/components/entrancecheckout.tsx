@@ -22,8 +22,6 @@ const EntranceCheckout = ({ product, application }) => {
 
     const txn = await createEntranceTransaction(input);
 
-    console.log("application", application);
-    console.log("product", product);
     console.log("txn", txn);
 
     let params = {

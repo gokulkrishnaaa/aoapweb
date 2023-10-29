@@ -3,11 +3,11 @@ import { ChevronRightIcon, HomeIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import v from "voca";
-export default function BreadCrumbs() {
+export default function BreadCrumbs({ application }) {
   const pathname = usePathname();
   const crumbs = pathname.split("/");
   if (crumbs[1] === "applications") {
-    crumbs[2] = `no : ${crumbs[2]}`;
+    crumbs[2] = `no : ${application.reference}`;
   }
 
   return (

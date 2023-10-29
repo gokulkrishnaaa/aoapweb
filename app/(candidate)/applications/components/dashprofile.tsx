@@ -12,7 +12,7 @@ import React from "react";
 import CldPicture from "../../profile/components/cldpicture";
 import Link from "next/link";
 
-const DashProfile = async () => {
+const DashProfile = () => {
   const { data: candidate, isLoading } = useQuery({
     queryKey: ["candidate"],
     queryFn: () => getCandidate(),

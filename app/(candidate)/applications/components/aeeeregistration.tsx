@@ -121,15 +121,13 @@ export default function AeeeRegistration({ application }) {
   return (
     <>
       <div className="mt-10 mx-auto max-w-md sm:max-w-4xl bg-white rounded-lg py-10 px-8">
-        {registration ? (
-          <div className="px-4 sm:px-0">
-            <h3 className="text-base font-semibold leading-7 text-gray-900">
-              Registration No : {registration.registrationNo}
-            </h3>
-          </div>
-        ) : (
-          <CompleteRegistration application={application} />
-        )}
+        <div className="px-4 sm:px-0">
+          <h3 className="text-base font-semibold leading-7 text-gray-900">
+            {registration
+              ? `Registration No : ${registration.registrationNo}`
+              : "Registration Pending"}
+          </h3>
+        </div>
 
         <div className="mt-6 border-t border-gray-200">
           <dl className="divide-y divide-gray-100">
@@ -192,7 +190,9 @@ export default function AeeeRegistration({ application }) {
         </div>
         {registration ? (
           <EntranceTotalPayments application={application} />
-        ) : null}
+        ) : (
+          <CompleteRegistration application={application} />
+        )}
       </div>
     </>
   );
