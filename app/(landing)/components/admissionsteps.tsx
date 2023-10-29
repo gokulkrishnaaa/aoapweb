@@ -25,12 +25,6 @@ const steps = [
     status: "complete",
   },
   { id: "4", name: "Payment", icon: CurrencyRupeeIcon, status: "complete" },
-  {
-    id: "5",
-    name: "Academic Details",
-    icon: BookmarkSquareIcon,
-    status: "complete",
-  },
 ];
 
 export default function AdmissionSteps() {
