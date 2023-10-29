@@ -59,8 +59,16 @@ export default async function Page() {
             <div>
               <SignIn />
             </div>
-            <div>
+            <div className="mt-10">
               <AdmissionSteps />
+            </div>
+            <div className="max-w-6xl mx-auto px-6 flex flex-col">
+              <Image
+                src="/images/amrita-footer.png"
+                width={1876}
+                height={168}
+                alt=""
+              />
             </div>
           </div>
         </div>
