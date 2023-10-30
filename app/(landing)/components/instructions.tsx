@@ -70,18 +70,7 @@ const Instructions = () => {
                   </span>
                 </p>
                 <span>
-                  You need to fill the address only if you wish to receive the
-                  brochure by mail.
-                </span>
-              </li>
-              <li className="flex gap-x-3">
-                <p>
-                  <span className="w-8 h-8 rounded-full border border-pink-700 text-pink-700 flex items-center justify-center">
-                    4
-                  </span>
-                </p>
-                <span>
-                  4. Upload your latest photograph. The application may get
+                  Upload your latest photograph. The application may get
                   rejected even after paying the registration fee if the
                   photograph is found to be unclear. Signature in digital format
                   also needs to be uploaded.
