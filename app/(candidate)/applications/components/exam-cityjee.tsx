@@ -148,7 +148,11 @@ export default function CityJee({ previousStep, nextStep, step, application }) {
         <dl className="divide-y divide-gray-100">
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">
-              City Preferences ( only 3 )
+              City Preferences
+              <p className="text-xs italic">
+                Choose 3 cities to attend the{" "}
+                <strong>Computer Based Test</strong>
+              </p>
             </dt>
             <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               {applicationCitiesLoading ? (

@@ -37,8 +37,8 @@ export default function ApplicationStats({ application }) {
               className="flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
               {application.Registration.length === 0
-                ? "Complete Registration"
-                : "View Application"}
+                ? "Registration Pending"
+                : "Registered"}
             </Link>
           </div>
         </div>
