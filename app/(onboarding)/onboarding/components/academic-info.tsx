@@ -9,6 +9,7 @@ import getStates from "@/app/data/getStates";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Spinner } from "flowbite-react";
+import sendWelcome from "@/app/data/admin/sendwelcome";
 
 const AcademicInfoSchema = yup.object().shape({
   stateId: yup.number().positive("Please select State"),
@@ -47,6 +48,10 @@ const AcademicInfo = () => {
     const onboarding = await updateOnboarding({
       data: { status: true },
     });
+
+    const mail = await sendWelcome();
+    console.log(mail);
+
     router.replace("/dashboard");
   };
 
