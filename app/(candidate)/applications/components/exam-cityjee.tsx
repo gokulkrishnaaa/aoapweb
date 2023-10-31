@@ -132,11 +132,8 @@ export default function CityJee({ previousStep, nextStep, step, application }) {
     <div className="mt-10 mx-auto max-w-md sm:max-w-4xl">
       <div className="px-4 sm:px-0">
         <h3 className="text-base font-semibold leading-7 text-gray-900">
-          Select Preferences
+          Choose three cities where you wish to attend the AEEE 2024 in CBT mode
         </h3>
-        <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-          Select cities to appear for exam and your preference to consider JEE.
-        </p>
 
         {error && (
           <p className="mt-2 text-sm text-red-600" id="email-error">
@@ -147,13 +144,7 @@ export default function CityJee({ previousStep, nextStep, step, application }) {
       <div className="mt-6 border-t border-gray-200">
         <dl className="divide-y divide-gray-100">
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
-              City Preferences
-              <p className="text-xs italic">
-                Choose 3 cities to attend the{" "}
-                <strong>Computer Based Test</strong>
-              </p>
-            </dt>
+            <dt className="text-sm font-medium leading-6 text-gray-900"></dt>
             <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               {applicationCitiesLoading ? (
                 <DataLoader size="lg" />

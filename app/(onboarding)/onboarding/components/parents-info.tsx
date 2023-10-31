@@ -87,7 +87,7 @@ const ParentsInfo = ({ showNext }) => {
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Parent’s / Guardians Information
+            Contact details of Parent / Guardian
           </h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
             Enter details of your parent or guardian.
@@ -99,7 +99,7 @@ const ParentsInfo = ({ showNext }) => {
                 htmlFor="fullname"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Enter the Parent/Guardian Name
+                Name of Parent / Guardian
               </label>
               <div className="relative mt-2">
                 <input
@@ -132,10 +132,6 @@ const ParentsInfo = ({ showNext }) => {
               >
                 Email address
               </label>
-              <p className="mt-2 mb-3 text-sm">
-                Use the same ID entered in Step 1 if there is no alternate
-                email-id
-              </p>
               <div className="flex gap-2">
                 <div className="relative mt-2 flex-1">
                   <input
@@ -169,9 +165,6 @@ const ParentsInfo = ({ showNext }) => {
               >
                 Phone
               </label>
-              <p className="mt-2 mb-3 text-sm">
-                Use the same No. entered in Step 1 if there is no alternate No.
-              </p>
               <div className="flex gap-2">
                 <div className="relative mt-2 rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 flex items-center">

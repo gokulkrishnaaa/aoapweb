@@ -1,5 +1,5 @@
 "use client";
-import { redirect, useRouter } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { cx } from "@/app/utilities/classnames";
@@ -22,6 +22,7 @@ const SignIn = () => {
   const [showTimer, setShowTimer] = useState(false);
   const [isSigninIn, setIsSigninIn] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const otpRef = useRef(null);
 
   const handleSubmit = async (e) => {
@@ -50,7 +51,18 @@ const SignIn = () => {
       if (isValidLogin) {
         setIsSigninIn(true);
         try {
-          const { onboarding } = await signIn({ username, otp: singleotp });
+          const utm = {
+            utm_source: searchParams.get("utm_source"),
+            utm_medium: searchParams.get("utm_medium"),
+            utm_campaign: searchParams.get("utm_campaign"),
+          };
+          console.log(utm);
+
+          const { onboarding } = await signIn({
+            username,
+            otp: singleotp,
+            utm,
+          });
           console.log(onboarding.status);
 
           if (onboarding.status) {
@@ -147,8 +159,8 @@ const SignIn = () => {
     <div className="flex flex-1 flex-col justify-center px-6 lg:px-8">
       <div className="border-b border-gray-200 rounded-lg shadow bg-white px-4 py-5 sm:px-6 mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm mb-3">
-          <h2 className="text-center text-xl font-bold leading-9 tracking-tight text-gray-900 uppercase">
-            Sign in
+          <h2 className="text-center text-xl font-bold leading-9 tracking-tight text-gray-900">
+            Sign Up / Sign In
           </h2>
         </div>
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -241,8 +253,8 @@ const SignIn = () => {
                 ? "Fetching OTP..."
                 : signInMode
                 ? isSigninIn
-                  ? "Sign In ..."
-                  : "Sign In"
+                  ? "Processing ..."
+                  : "Sign Up / Sign In"
                 : "Get OTP"}
             </button>
           </div>

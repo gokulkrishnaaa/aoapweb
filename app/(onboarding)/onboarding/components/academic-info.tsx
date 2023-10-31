@@ -76,7 +76,7 @@ const AcademicInfo = () => {
                 htmlFor="first-name"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                12th Standard State <span className="text-red-600">*</span>
+                Choose the state where you completed +2{" "}
                 {statesLoading ? (
                   <Spinner
                     aria-label="Pink spinner example"

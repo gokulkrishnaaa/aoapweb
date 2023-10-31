@@ -5,8 +5,8 @@ const PayProcessingForm = ({ txndetails }) => {
   const formRef = useRef(null);
   console.log(txndetails);
 
-  const key = "aJ1WVm";
-  const salt = "hKmYSMBAzg5QOw64IV9MFtcu6BKaIyYA";
+  const key = "5serGB";
+  const salt = "SfUWYazGo07yRh3gH0BEjTbzxCliTVCQ";
   const hash = generateHash(txndetails, salt);
   const surl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/exam/paymentsuccess`;
   const furl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/exam/paymentfailure`;
@@ -50,7 +50,7 @@ const PayProcessingForm = ({ txndetails }) => {
   return (
     <form
       ref={formRef}
-      action="https://test.payu.in/_payment"
+      action="https://secure.payu.in/_payment"
       method="post"
       className="flex flex-col"
     >
