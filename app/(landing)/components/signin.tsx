@@ -58,11 +58,20 @@ const SignIn = () => {
           };
           console.log(utm);
 
-          const { onboarding } = await signIn({
+          let loginData = {
             username,
             otp: singleotp,
-            utm,
-          });
+            utm: null,
+          };
+
+          if (utm.utm_source || utm.utm_medium || utm.utm_campaign) {
+            loginData = {
+              ...loginData, // Keep the existing properties in loginData
+              utm,
+            };
+          }
+
+          const { onboarding } = await signIn(loginData);
           console.log(onboarding.status);
 
           if (onboarding.status) {
@@ -253,7 +262,7 @@ const SignIn = () => {
                 ? "Fetching OTP..."
                 : signInMode
                 ? isSigninIn
-                  ? "Processing ..."
+                  ? "Processing..."
                   : "Sign Up / Sign In"
                 : "Get OTP"}
             </button>
