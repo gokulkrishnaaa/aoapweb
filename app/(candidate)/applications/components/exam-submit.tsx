@@ -81,7 +81,7 @@ export default function AeeeSubmit({ previousStep, step, application }) {
                     role="list"
                     className="divide-y divide-gray-100 rounded-md border border-gray-200"
                   >
-                    {applicationCities.map((city) => (
+                    {applicationCities.map((city, idx) => (
                       <li
                         key={city.id}
                         className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"
@@ -89,7 +89,7 @@ export default function AeeeSubmit({ previousStep, step, application }) {
                         <div className="flex w-0 flex-1 items-center">
                           <div className="ml-4 flex min-w-0 flex-1 gap-2">
                             <span className="truncate">
-                              {city.examcity.city.name}
+                              {idx + 1}. {city.examcity.city.name}
                             </span>
                           </div>
                         </div>
