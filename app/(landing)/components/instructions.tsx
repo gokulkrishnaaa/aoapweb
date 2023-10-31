@@ -10,27 +10,23 @@ const Instructions = () => {
       <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">
         <h1
           id="admissioninstructions"
-          className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
+          className="mt-2 text-xl font-bold tracking-tight text-gray-900 sm:text-2xl"
         >
-          Instructions
+          Guidelines to complete the Amrita Entrance Examination registration.
         </h1>
-        <p className="mt-6 text-xl leading-8">
+        <p className="mt-6 text-lg sm:text-xl leading-8 font-bold">
+          There are no agents or agencies entrusted by the Directorate of
+          Admissions to offer any admissions on behalf of the university.
+        </p>
+        <p className="mt-6 sm:text-lg leading-8">
           Directorate of Admissions & Academic Outreach at Amrita Vishwa
           Vidyapeetham conducts entrance examinations every year for admission
-          to all the undergraduate programmes.
+          to all the undergraduate & integrated programmes. Prospective
+          candidates are hereby informed that this is the only portal to
+          register for the entrance examinations for admission to various
+          undergraduate and integrated programmes.
         </p>
         <div className="mt-10 max-w-2xl space-y-5">
-          <p>
-            Prospective candidates are hereby informed that this is the only
-            portal to register for the entrance examinations conducted by
-            Directorate of Admissions & Academic Outreach, Amrita Vishwa
-            Vidyapeetham for admission to various undergraduate and integrated
-            programmes offered at all the campuses.
-          </p>
-          <p>
-            There are no agents or agencies entrusted by the Directorate of
-            Admissions to offer any admissions on behalf of the university.
-          </p>
           <p>
             Steps to complete your Registration for Amrita Entrance
             Examinations:
@@ -45,10 +41,10 @@ const Instructions = () => {
                   </span>
                 </p>
                 <span>
-                  Enter your Email ID OR Mobile Number to get OTP. Note that,
-                  this Email ID OR Mobile Number will be used as the primary
-                  channel for all the communications from Directorate of
-                  Admissions.
+                  Enter your Email ID OR Mobile Number to receive OTP to Sign Up
+                  / Sign In. Note that, this Email ID OR Mobile Number will be
+                  used as the primary channel for all the communications on
+                  admissions.
                 </span>
               </li>
               <li className="flex gap-x-3">
@@ -58,15 +54,23 @@ const Instructions = () => {
                   </span>
                 </p>
                 <span>
-                  After logging into the portal, fill the basic details like
-                  full name as per the records, date of birth, social status,
-                  contact details, aadhaar number, etc.
+                  Fill the basic details like full name as per the records, date
+                  of birth, social status, contact details, Aadhaar number, etc.
+                  after successful sign-in.
                 </span>
               </li>
               <li className="flex gap-x-3">
                 <p>
                   <span className="w-8 h-8 rounded-full border border-pink-700 text-pink-700 flex items-center justify-center">
                     3
+                  </span>
+                </p>
+                <span>Complete your address.</span>
+              </li>
+              <li className="flex gap-x-3">
+                <p>
+                  <span className="w-8 h-8 rounded-full border border-pink-700 text-pink-700 flex items-center justify-center">
+                    4
                   </span>
                 </p>
                 <span>
@@ -88,7 +92,8 @@ const Instructions = () => {
                   </span>
                 </p>
                 <span>
-                  Enter the name, Email ID & Mobile number to proceed further.
+                  Enter the name, Email ID & Mobile number of the
+                  parent/guardian to proceed.
                 </span>
               </li>
             </ul>
@@ -107,16 +112,19 @@ const Instructions = () => {
             </ul>
           </div>
           <div>
-            <p className="mt-8">Now you have completed your profile entry.</p>
-            <p className="mt-8">
-              Next is to choose the entrance examination you wish to attend by
-              clicking on the “Apply” button.
+            <p className="mt-8 italic">
+              Now you have completed your profile entry.
             </p>
             <p className="mt-8">
-              In Step 1, choose 3 cities to attend the entrance. Note that you
-              are required to choose 3 cities. If you wish to seek admission
-              based on JEE Mains 2024 Percentile also, check the option. You may
-              check this option later too.
+              Next is to choose the entrance examination you wish to register by
+              clicking on the “Apply” button in the respective entrance
+              examination.
+            </p>
+            <p className="mt-8">
+              In Step 1, choose 3 cities to attend the entrance. Note that it is
+              mandatory to choose 3 cities. Check the option if you wish to seek
+              admission based on JEE Mains 2024 Percentile also for B.Tech
+              programmes. This option can be exercised later too.
             </p>
             <p className="mt-8">
               Next is to complete your payment and you are done with the
