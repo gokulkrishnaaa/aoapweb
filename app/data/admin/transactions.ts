@@ -11,6 +11,15 @@ export async function getTransactionsByApplication(applicationId) {
   }
 }
 
+export async function getTransactionsByCandidate() {
+  try {
+    const { data } = await apiclient.get(`/api/transactions/entrance/`);
+    return data;
+  } catch (error) {
+    return [];
+  }
+}
+
 export async function createEntranceTransaction(input) {
   try {
     const { data } = await apiclient.post(`/api/transactions/entrance/`, input);
