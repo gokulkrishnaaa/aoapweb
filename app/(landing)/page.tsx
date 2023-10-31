@@ -55,10 +55,10 @@ export default async function Page() {
             </div>
             <div className="space-y-5">
               <h1 className="text-2xl text-center font-bold tracking-tight text-white sm:text-4xl">
-                Amrita Online Admissions Portal
+                Directorate of Admissions & Academic Outreach
               </h1>
               <h2 className="text-lg text-center font-bold tracking-tight text-white sm:text-2xl">
-                Directorate of Admissions & Academic Outreach
+                Amrita Online Admissions Portal
               </h2>
               <p className="text-white text-center text-md sm:text-lg">
                 A unified online platform for streamlined registration for the
