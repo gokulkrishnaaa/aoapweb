@@ -12,7 +12,7 @@ const OnboardingWrapper = ({ loadingStep, user }) => {
     setCurrentStep((state) => state + 1);
   }
   return (
-    <section className="flex max-w-2xl mx-auto flex-col my-10 sm:my-28">
+    <section className="flex max-w-2xl mx-auto flex-col my-10 sm:mt-28">
       <StepsNav currentStep={currentStep} />
       <div className="h-5 sm:h-10"></div>
       <div className="px-4 sm:px-0">

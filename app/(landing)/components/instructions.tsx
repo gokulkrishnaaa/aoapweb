@@ -135,6 +135,10 @@ const Instructions = () => {
               receive the welcome email, mark it as “Not Spam” or “Important” so
               that the future email communication doesn’t go to the Spam folder.
             </p>
+            <p className="font-bold pt-6 text-sm text-gray-800">
+              Call our Admission Support Officers if you have any queries:
+              044-462 76066
+            </p>
           </div>
         </div>
       </div>
