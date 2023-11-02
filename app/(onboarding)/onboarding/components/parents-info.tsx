@@ -37,17 +37,11 @@ const ParentsInfo = ({ showNext }) => {
   } = useForm({
     resolver: async (data, context, options) => {
       // you can debug your validation schema here
-      console.log("formData", data);
-      console.log(
-        "validation result",
-        await yupResolver(ParentInfoSchmema)(data, context, options)
-      );
       return yupResolver(ParentInfoSchmema)(data, context, options);
     },
   });
-  //   console.log(errors);
+
   const onSubmit = async (data) => {
-    console.log(data);
     let isEmailValid = true;
     let isPhoneValid = true;
     clearErrors();
