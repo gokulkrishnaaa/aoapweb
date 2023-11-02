@@ -13,7 +13,11 @@ const navigation = [
   { name: "Dashboard", href: "/admin/dashboard" },
   {
     name: "Reports",
-    children: [{ name: "utm", href: "/admin/reports/utm" }],
+    children: [
+      { name: "UTM", href: "/admin/reports/utm" },
+      { name: "State", href: "/admin/reports/state" },
+      { name: "Exam", href: "/admin/reports/exam" },
+    ],
   },
   {
     name: "Master",

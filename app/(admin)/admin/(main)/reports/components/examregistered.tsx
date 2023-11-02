@@ -1,24 +1,24 @@
 "use client";
 import DataLoader from "@/app/components/DataLoader";
-import { getUTMReport } from "@/app/data/admin/reports";
+import { getExamRegistered } from "@/app/data/admin/reports";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
-const UTMReports = () => {
-  const { data: utms, isLoading: utmsLoading } = useQuery({
-    queryKey: ["reports", "utm"],
-    queryFn: () => getUTMReport(),
+const ExamRegistered = () => {
+  const { data: reports, isLoading: reportsLoading } = useQuery({
+    queryKey: ["reports", "examregistered"],
+    queryFn: () => getExamRegistered(),
   });
 
-  console.log(utms);
+  console.log(reports);
 
   return (
     <div className="mt-8 flow-root">
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-          {utmsLoading ? (
+          {reportsLoading ? (
             <DataLoader size="lg" />
-          ) : utms && utms.length > 0 ? (
+          ) : reports && reports.length > 0 ? (
             <table className="min-w-full divide-y divide-gray-300">
               <thead>
                 <tr>
@@ -26,51 +26,33 @@ const UTMReports = () => {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Source
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                  >
-                    Media
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                  >
-                    Campaign
+                    Entrance
                   </th>
                   <th
                     scope="col"
                     className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                   >
-                    Signed Up
+                    Exam Description
                   </th>
                   <th
                     scope="col"
                     className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                   >
-                    Profile Updated
+                    Registered
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {utms.map((utm) => (
-                  <tr key={utm.id}>
+                {reports.map((report) => (
+                  <tr key={report.examId}>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {utm.utm_source}
+                      {report.entrance}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {utm.utm_medium}
+                      {report.exam}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {utm.utm_campaign}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {utm.signed_count}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {utm.profile_created}
+                      {report.registered}
                     </td>
                   </tr>
                 ))}
@@ -85,4 +67,4 @@ const UTMReports = () => {
   );
 };
 
-export default UTMReports;
+export default ExamRegistered;
