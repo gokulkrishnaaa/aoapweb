@@ -1,8 +1,8 @@
 import apiclient from "@/app/utilities/createclient";
 
-export const getUTMReport = async () => {
+export const getUTMReport = async (input) => {
   try {
-    const { data } = await apiclient.get(`/api/admin/reports/utm`);
+    const { data } = await apiclient.post(`/api/admin/reports/utm`, input);
     return data;
   } catch (error) {
     return null;

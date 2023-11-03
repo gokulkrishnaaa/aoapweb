@@ -13,9 +13,9 @@ export default async function Page() {
   const user = await getUser();
 
   const referer = headersList.get("referer");
-  const base = `${process.env.NEXT_PUBLIC_API_BASE_URL}/`;
+  const base = `${process.env.NEXT_PUBLIC_API_BASE_URL}`;
 
-  if (referer && referer != base) {
+  if (referer && !referer.startsWith(base)) {
     const refResult = await addReferer({ url: referer });
   }
 
