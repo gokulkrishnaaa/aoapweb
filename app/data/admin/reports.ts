@@ -26,3 +26,12 @@ export const getExamRegistered = async () => {
     return null;
   }
 };
+
+export const getReferer = async () => {
+  try {
+    const { data } = await apiclient.get(`/api/admin/reports/referer`);
+    return data;
+  } catch (error) {
+    return null;
+  }
+};

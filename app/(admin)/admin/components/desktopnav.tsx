@@ -17,6 +17,7 @@ const navigation = [
       { name: "UTM", href: "/admin/reports/utm" },
       { name: "State", href: "/admin/reports/state" },
       { name: "Exam", href: "/admin/reports/exam" },
+      { name: "Referer", href: "/admin/reports/referer" },
     ],
   },
   {
