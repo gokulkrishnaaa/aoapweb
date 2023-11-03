@@ -9,19 +9,20 @@ export const getUTMReport = async (input) => {
   }
 };
 
-export const getStateReport = async () => {
+export const getStateReport = async (input) => {
   try {
-    const { data } = await apiclient.get(`/api/admin/reports/state`);
+    const { data } = await apiclient.post(`/api/admin/reports/state`, input);
     return data;
   } catch (error) {
     return null;
   }
 };
 
-export const getDistrictReport = async (stateId) => {
+export const getDistrictReport = async (stateId, input) => {
   try {
-    const { data } = await apiclient.get(
-      `/api/admin/reports/district/${stateId}`
+    const { data } = await apiclient.post(
+      `/api/admin/reports/district/${stateId}`,
+      input
     );
     return data;
   } catch (error) {
