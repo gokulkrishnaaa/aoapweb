@@ -16,6 +16,7 @@ const navigation = [
     children: [
       { name: "UTM", href: "/admin/reports/utm" },
       { name: "State", href: "/admin/reports/state" },
+      { name: "District", href: "/admin/reports/district" },
       { name: "Exam", href: "/admin/reports/exam" },
       { name: "Referer", href: "/admin/reports/referer" },
     ],

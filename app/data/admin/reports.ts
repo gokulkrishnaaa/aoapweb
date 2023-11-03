@@ -18,6 +18,17 @@ export const getStateReport = async () => {
   }
 };
 
+export const getDistrictReport = async (stateId) => {
+  try {
+    const { data } = await apiclient.get(
+      `/api/admin/reports/district/${stateId}`
+    );
+    return data;
+  } catch (error) {
+    return null;
+  }
+};
+
 export const getExamRegistered = async () => {
   try {
     const { data } = await apiclient.get(`/api/admin/reports/examregistered`);
