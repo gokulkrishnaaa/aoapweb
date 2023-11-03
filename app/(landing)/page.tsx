@@ -5,10 +5,20 @@ import Image from "next/image";
 import AdmissionSteps from "./components/admissionsteps";
 import Instructions from "./components/instructions";
 import Footer from "./components/footer";
+import { headers } from "next/headers";
+import addReferer from "../data/addReferer";
 
 export default async function Page() {
+  const headersList = headers();
   const user = await getUser();
-  console.log(user);
+
+  const referer = headersList.get("referer");
+  const base = `${process.env.NEXT_PUBLIC_API_BASE_URL}/`;
+
+  if (referer && referer != base) {
+    const refResult = await addReferer({ url: referer });
+  }
+
   if (user) {
     if (user.onboardingstatus) {
       redirect("/dashboard");
