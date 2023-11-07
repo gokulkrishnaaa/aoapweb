@@ -9,6 +9,8 @@ const ContactAddress = () => {
     queryKey: ["candidate"],
     queryFn: () => getCandidate(),
   });
+  console.log("candiate", candidate);
+
   return (
     <div>
       <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -43,7 +45,9 @@ const ContactAddress = () => {
                 City
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <div className="text-gray-900">{candidate.city.name}</div>
+                <div className="text-gray-900">
+                  {candidate.city ? candidate.city.name : candidate.otherCity}
+                </div>
               </dd>
             </div>
             <div className="pt-6 sm:flex">
