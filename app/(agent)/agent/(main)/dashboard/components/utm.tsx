@@ -1,33 +1,25 @@
 "use client";
-import DataLoader from "@/app/components/DataLoader";
-import { getUTMReport } from "@/app/data/admin/reports";
 import { getEntrances, getExamsByEntrance } from "@/app/data/entranceclient";
 import { useQuery } from "@tanstack/react-query";
 import { Spinner } from "flowbite-react";
 import React, { useState } from "react";
+import USDReports from "./usdreports";
+import EntranceReports from "./entrancereports";
 
-const UTMReports = () => {
+const UTMReports = ({ source, stateId, districtId }) => {
   const [entranceId, setEntranceId] = useState(null);
-  const [examId, setExamId] = useState(null);
+  //   const [examId, setExamId] = useState(null);
 
   const { data: entrances, isLoading: entrancesLoading } = useQuery({
     queryKey: ["entrances"],
     queryFn: () => getEntrances(),
   });
 
-  const { data: exams, isFetching: examsLoading } = useQuery({
-    queryKey: ["exam", entranceId],
-    queryFn: () => getExamsByEntrance(entranceId),
-    enabled: !!entranceId,
-  });
-
-  const { data: utms, isLoading: utmsLoading } = useQuery({
-    queryKey: ["reports", "utm", { entranceId, examId }],
-    queryFn: () => getUTMReport({ entranceId, examId }),
-  });
-
-  console.log(utms);
-  console.log(exams);
+  //   const { data: exams, isFetching: examsLoading } = useQuery({
+  //     queryKey: ["exam", entranceId],
+  //     queryFn: () => getExamsByEntrance(entranceId),
+  //     enabled: !!entranceId,
+  //   });
 
   return (
     <div>
@@ -70,7 +62,7 @@ const UTMReports = () => {
               </div>
             </div>
           </div>
-          <div className="sm:col-span-2">
+          {/* <div className="sm:col-span-2">
             <label
               htmlFor="first-name"
               className="block text-sm font-medium leading-6 text-gray-900"
@@ -102,97 +94,20 @@ const UTMReports = () => {
                 </select>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
-      <div className="mt-8 flow-root">
-        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            {utmsLoading ? (
-              <DataLoader size="lg" />
-            ) : utms && utms.length > 0 ? (
-              <table className="min-w-full divide-y divide-gray-300">
-                <thead>
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Source
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Media
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Campaign
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
-                    >
-                      Signed Up
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
-                    >
-                      Profile Updated
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
-                    >
-                      Applied
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
-                    >
-                      Registered
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {utms.map((utm, idx) => (
-                    <tr key={idx}>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {utm.utm_source}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {utm.utm_medium}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {utm.utm_campaign}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {utm.signed_count}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {utm.profile_created}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {utm.applied != null ? utm.applied : "N/A"}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {utm.registered != null ? utm.registered : "N/A"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <div>No Data available</div>
-            )}
-          </div>
-        </div>
-      </div>
+      {entranceId ? (
+        <EntranceReports
+          source={source}
+          stateId={stateId}
+          districtId={districtId}
+          entranceId={entranceId}
+        />
+      ) : (
+        <USDReports source={source} stateId={stateId} districtId={districtId} />
+      )}
     </div>
   );
 };

@@ -39,6 +39,10 @@ const navigation = [
       { name: "Transactions", href: "/admin/master/transactions" },
     ],
   },
+  {
+    name: "Agents",
+    children: [{ name: "Agent", href: "/admin/agents" }],
+  },
 ];
 
 const DesktopNav = () => {

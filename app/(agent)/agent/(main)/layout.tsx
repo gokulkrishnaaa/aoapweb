@@ -6,6 +6,7 @@ import TanStackProvider from "@/app/components/tanstackprovides";
 import getAgentUser from "@/app/data/agent/getagentuser";
 import SuperHeader from "../components/super-header";
 import Footer from "../components/footer";
+import { UserProvider } from "./components/UserProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,7 +32,9 @@ export default async function AdminMainRootLayout({
         <div className="min-h-full flex flex-col">
           <SuperHeader user={user} />
           <div className="flex-1">
-            <TanStackProvider>{children}</TanStackProvider>
+            <TanStackProvider>
+              <UserProvider user={user}>{children}</UserProvider>
+            </TanStackProvider>
           </div>
           <Footer />
         </div>

@@ -1,7 +1,5 @@
 "use client";
 import DataLoader from "@/app/components/DataLoader";
-import { addGender, removeGender, updateGender } from "@/app/data/admin/gender";
-import getGender from "@/app/data/getGender";
 import {
   CheckIcon,
   ExclamationCircleIcon,
@@ -11,73 +9,82 @@ import {
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Confirmation from "../../../components/confirmation";
-import {
-  addEntrance,
-  getEntrances,
-  removeEntrance,
-} from "@/app/data/entranceclient";
-import EntranceEdit from "./entranceedit";
+import { addEntrance, removeEntrance } from "@/app/data/entranceclient";
 import { toast } from "react-toastify";
 import toaststrings from "@/app/utilities/toaststrings";
+import AgentEdit from "./agentedit";
+import { addAgent, getAgents, removeAgent } from "@/app/data/agent/agent";
+import Link from "next/link";
+import { generatePass } from "@/app/utilities/generatePass";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const EntranceSchema = yup.object().shape({
+const AgentSchema = yup.object().shape({
   name: yup
     .string()
     .required("Name is required")
     .min(1, "Minimum 8 characters"),
-  code: yup
+  email: yup.string().required("Email is required").email("Not a valid email"),
+  username: yup.string().required("Username is required"),
+  password: yup
     .string()
-    .required("Code is required")
-    .min(4, "Minimum 4 characters"),
-  description: yup.string().required("Description is required"),
+    .required("Password is required")
+    .matches(/^\S*$/, "Password cannot contain spaces")
+    .min(8, "Minimum 8 Characters"),
 });
 
-export default function Entrance() {
+export default function AgentsList() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmationData, setConfirmationData] = useState(null);
   const [actionQueue, setActionQueue] = useState([]);
   const [editItem, setEditItem] = useState(null);
+  const [password, setPassword] = useState("");
   const queryClient = useQueryClient();
 
   const {
     register,
     handleSubmit,
+    control,
     reset,
     formState: { errors },
   } = useForm({
     resolver: async (data, context, options) => {
       console.log("formData", data);
+      const fulldata = { ...data, password };
       console.log(
         "validation result",
-        await yupResolver(EntranceSchema)(data, context, options)
+        await yupResolver(AgentSchema)(fulldata, context, options)
       );
-      return yupResolver(EntranceSchema)(data, context, options);
+      return yupResolver(AgentSchema)(fulldata, context, options);
     },
   });
 
   const { data: items, isLoading: itemsLoading } = useQuery({
-    queryKey: ["entrance"],
-    queryFn: () => getEntrances(),
+    queryKey: ["agents"],
+    queryFn: () => getAgents(),
   });
 
+  function generatePassword() {
+    const pass = generatePass();
+    setPassword(pass);
+  }
+
   const { mutate: addMutate, isLoading: mutationLoading } = useMutation({
-    mutationFn: (data) => addEntrance(data),
+    mutationFn: (data) => addAgent(data),
     onSettled: (data, error, variables, context) => {
-      queryClient.invalidateQueries(["entrance"]);
+      queryClient.invalidateQueries(["agents"]);
     },
   });
 
   const { mutate: removeMutate, isLoading: removeMutationLoading } =
     useMutation({
-      mutationFn: (id) => removeEntrance(id),
+      mutationFn: (id) => removeAgent(id),
       onMutate: (variables) => {
         return variables;
       },
@@ -86,14 +93,17 @@ export default function Entrance() {
           setActionQueue((state) => state.filter((item) => item != variables));
           toast(toaststrings["uniquedelete"]);
         } else {
-          await queryClient.invalidateQueries(["entrance"]);
+          await queryClient.invalidateQueries(["agents"]);
           setActionQueue((state) => state.filter((item) => item != data.id));
         }
       },
     });
 
   async function onSumbit(data) {
+    console.log("data to save", data);
+
     await addMutate(data);
+    setPassword("");
     reset();
   }
 
@@ -124,12 +134,12 @@ export default function Entrance() {
     <>
       <div className="px-4 sm:px-6 lg:px-8 max-w-4xl">
         {editItem ? (
-          <EntranceEdit item={editItem} editCompleted={editComplete} />
+          <AgentEdit item={editItem} editCompleted={editComplete} />
         ) : (
           <>
             <div className="space-y-5 max-w-2xl">
               <h2 className="text-base font-semibold leading-7 text-gray-900">
-                Entrance
+                Agents
               </h2>
               <form
                 action=""
@@ -170,15 +180,15 @@ export default function Entrance() {
                       htmlFor="code"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
-                      Code
+                      Email
                     </label>
                     <div className="relative mt-2">
                       <input
-                        type="text"
-                        {...register("code")}
+                        type="email"
+                        {...register("email")}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
                       />
-                      {errors["code"] && (
+                      {errors["email"] && (
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                           <ExclamationCircleIcon
                             className="h-5 w-5 text-red-500"
@@ -187,29 +197,89 @@ export default function Entrance() {
                         </div>
                       )}
                     </div>
-                    {errors["code"] && (
+                    {errors["email"] && (
                       <p className="mt-2 text-sm text-red-600" id="email-error">
-                        {errors["code"].message}
+                        {errors["email"].message}
                       </p>
                     )}
                   </div>
-                  <div className="sm:col-span-6">
+                  <div className="sm:col-span-3">
                     <label
-                      htmlFor="description"
+                      htmlFor="fullname"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
-                      Description
+                      Username (Same as UTM Source)
                     </label>
-                    <div className="mt-2">
-                      <textarea
-                        rows={4}
-                        {...register("description")}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    <div className="relative mt-2">
+                      <input
+                        type="text"
+                        {...register("username")}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
                       />
+                      {errors["name"] && (
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                          <ExclamationCircleIcon
+                            className="h-5 w-5 text-red-500"
+                            aria-hidden="true"
+                          />
+                        </div>
+                      )}
                     </div>
-                    {errors["description"] && (
+                    {errors["username"] && (
                       <p className="mt-2 text-sm text-red-600" id="email-error">
-                        {errors["description"].message}
+                        {errors["username"].message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="sm:col-span-3">
+                    <label
+                      htmlFor="last-name"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Password
+                    </label>
+                    <div className="flex gap-2">
+                      <div className="relative mt-2 flex-1">
+                        <Controller
+                          control={control}
+                          name="password"
+                          render={({ field }) => (
+                            <input
+                              type="text"
+                              {...field}
+                              value={password}
+                              onChange={(e) => {
+                                setPassword(e.target.value);
+                                console.log("chean", password);
+                                field.onChange(e);
+                              }}
+                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                            />
+                          )}
+                        />
+                        {errors["password"] && (
+                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                            <ExclamationCircleIcon
+                              className="h-5 w-5 text-red-500"
+                              aria-hidden="true"
+                            />
+                          </div>
+                        )}
+                      </div>
+                      <div className="self-center mt-2">
+                        <Link
+                          href="#"
+                          onClick={generatePassword}
+                          className="text-sm font-semibold text-pink-600 hover:text-pink-500"
+                        >
+                          Generate
+                        </Link>
+                      </div>
+                    </div>
+
+                    {errors["password"] && (
+                      <p className="mt-2 text-sm text-red-600" id="email-error">
+                        {errors["password"].message}
                       </p>
                     )}
                   </div>
@@ -248,13 +318,19 @@ export default function Entrance() {
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
                       >
-                        Code
+                        Username
                       </th>
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
                       >
-                        Description
+                        Email
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
+                      >
+                        Active
                       </th>
 
                       <th
@@ -282,7 +358,7 @@ export default function Entrance() {
                             "px-3 py-3.5 text-sm text-gray-500 lg:table-cell"
                           )}
                         >
-                          {item.code}
+                          {item.username}
                         </td>
                         <td
                           className={classNames(
@@ -290,7 +366,15 @@ export default function Entrance() {
                             "px-3 py-3.5 text-sm text-gray-500 lg:table-cell"
                           )}
                         >
-                          {item.description}
+                          {item.email}
+                        </td>
+                        <td
+                          className={classNames(
+                            itemIdx === 0 ? "" : "border-t border-gray-200",
+                            "px-3 py-3.5 text-sm text-gray-500 lg:table-cell"
+                          )}
+                        >
+                          {item.active ? "Yes" : "No"}
                         </td>
                         <td
                           className={classNames(
@@ -303,7 +387,7 @@ export default function Entrance() {
                               <DataLoader />
                             ) : (
                               <div className="space-x-3">
-                                <button
+                                {/* <button
                                   type="button"
                                   onClick={() => handleEdit(item)}
                                   className="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-pink-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white"
@@ -313,7 +397,7 @@ export default function Entrance() {
                                     aria-hidden="true"
                                   />
                                   <span className="sr-only">, {item.name}</span>
-                                </button>
+                                </button> */}
 
                                 <button
                                   type="button"

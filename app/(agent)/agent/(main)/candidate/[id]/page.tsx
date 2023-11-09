@@ -1,10 +1,10 @@
 import React from "react";
-import AgentDetails from "./components/agentdetails";
+import GeneralWrapper from "./components/generalwrapper";
 
-const Page = () => {
+const Page = ({ params }) => {
   return (
     <div className="max-w-3xl mx-auto px-3 sm:px-6 py-3 sm:py-6">
-      <AgentDetails />
+      <GeneralWrapper candidateId={params.id} />
     </div>
   );
 };
