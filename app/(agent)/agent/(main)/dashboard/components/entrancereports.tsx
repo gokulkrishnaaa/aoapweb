@@ -1,6 +1,11 @@
 import DataLoader from "@/app/components/DataLoader";
-import { getUtmCandidatesByEntrance } from "@/app/data/agent/reports";
+import {
+  downloadUtmCandidatesByEntrance,
+  getUtmCandidatesByEntrance,
+} from "@/app/data/agent/reports";
+import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
+import FileDownload from "js-file-download";
 import Link from "next/link";
 import React from "react";
 
@@ -28,15 +33,40 @@ const EntranceReports = ({ source, stateId, districtId, entranceId }) => {
         entranceId,
       }),
   });
-  console.log("candidates", candidates);
+
+  const handleExcelDownload = async () => {
+    try {
+      const data = await downloadUtmCandidatesByEntrance(source, {
+        stateId,
+        districtId,
+        entranceId,
+      });
+
+      const filename = `UTM-${source}-entrance-${Date.now()}.xlsx`;
+
+      FileDownload(data, filename);
+    } catch (error) {
+      console.error("Error downloading Excel file:", error);
+    }
+  };
 
   return (
     <div className="mt-8 flow-root">
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-          <h3 className="font-semibold">
+          <h3 className="font-semibold flex justify-between items-baseline">
             Count : {candidates && candidates.length}
+            <button
+              type="button"
+              className="flex gap-1 items-center rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              onClick={handleExcelDownload}
+            >
+              <ArrowDownOnSquareIcon className="h-6 w-6" />
+              Download Report
+            </button>
           </h3>
+
+          <div className="h-4"></div>
           {isLoading ? (
             <DataLoader size="lg" />
           ) : candidates && candidates.length > 0 ? (
