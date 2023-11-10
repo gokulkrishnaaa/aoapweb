@@ -387,7 +387,7 @@ export default function AgentsList() {
                               <DataLoader />
                             ) : (
                               <div className="space-x-3">
-                                {/* <button
+                                <button
                                   type="button"
                                   onClick={() => handleEdit(item)}
                                   className="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-pink-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white"
@@ -397,7 +397,7 @@ export default function AgentsList() {
                                     aria-hidden="true"
                                   />
                                   <span className="sr-only">, {item.name}</span>
-                                </button> */}
+                                </button>
 
                                 <button
                                   type="button"

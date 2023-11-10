@@ -19,6 +19,16 @@ export const addAgent = async (input) => {
   }
 };
 
+export const updateAgent = async ({ id, input }) => {
+  try {
+    const { data } = await apiclient.put(`/api/admin/agent/${id}`, input);
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};
+
 export const removeAgent = async (id) => {
   try {
     const { data } = await apiclient.delete(`/api/admin/agent/${id}`);
