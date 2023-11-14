@@ -2,27 +2,27 @@
 import React, { useState } from "react";
 import apiclient from "@/app/utilities/createclient";
 import { useRouter } from "next/navigation";
-import PayProcessingForm from "./payprocessingform";
+// import PayProcessingForm from "./payprocessingform";
 import { createEntranceTransaction } from "@/app/data/admin/transactions";
 import DataLoader from "@/app/components/DataLoader";
+import { createJeeTransaction } from "@/app/data/jee/transactions";
+import JeePayProcessingForm from "./jeepayprocessingform";
 
-const EntranceCheckout = ({ product, application, discount }) => {
+const JeeCheckout = ({ product, application }) => {
   const [txnDetails, setTxnDetails] = useState(null);
   const [creatingTxn, setCreatingTxn] = useState(false);
   const router = useRouter();
 
-  const finalAmount = parseFloat(product.amount) - parseFloat(discount);
-
   async function createTransaction() {
     setCreatingTxn(true);
     const input = {
-      candidateId: application.candidateId,
-      examapplicationId: application.id,
+      candidateId: application.candidate.id,
+      jeeapplicationId: application.id,
       description: product.name,
-      amount: finalAmount,
+      amount: product.amount,
     };
 
-    const txn = await createEntranceTransaction(input);
+    const txn = await createJeeTransaction(input);
 
     console.log("txn", txn);
 
@@ -76,7 +76,7 @@ const EntranceCheckout = ({ product, application, discount }) => {
                     </td>
 
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      <p>₹ {finalAmount}</p>
+                      <p>₹ {product.amount}</p>
                     </td>
                   </tr>
                   <tr>
@@ -85,7 +85,7 @@ const EntranceCheckout = ({ product, application, discount }) => {
                     </td>
 
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      <p>₹ {finalAmount}</p>
+                      <p>₹ {product.amount}</p>
                     </td>
                   </tr>
                 </tbody>
@@ -104,9 +104,11 @@ const EntranceCheckout = ({ product, application, discount }) => {
           Pay {creatingTxn && <DataLoader size="sm" />}
         </button>
       </div>
-      <div>{txnDetails && <PayProcessingForm txndetails={txnDetails} />}</div>
+      <div>
+        {txnDetails && <JeePayProcessingForm txndetails={txnDetails} />}
+      </div>
     </div>
   );
 };
 
-export default EntranceCheckout;
+export default JeeCheckout;

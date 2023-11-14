@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import crypto from "crypto";
 
-const PayProcessingForm = ({ txndetails }) => {
+const JeePayProcessingForm = ({ txndetails }) => {
   const formRef = useRef(null);
   console.log(txndetails);
 
@@ -16,8 +16,8 @@ const PayProcessingForm = ({ txndetails }) => {
   const gatewayUrl = "https://test.payu.in/_payment";
 
   const hash = generateHash(txndetails, salt);
-  const surl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/exam/paymentsuccess`;
-  const furl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/exam/paymentfailure`;
+  const surl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jee/paymentsuccess`;
+  const furl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jee/paymentfailure`;
 
   function generateHash(input, salt) {
     let hashString =
@@ -77,4 +77,4 @@ const PayProcessingForm = ({ txndetails }) => {
   );
 };
 
-export default PayProcessingForm;
+export default JeePayProcessingForm;

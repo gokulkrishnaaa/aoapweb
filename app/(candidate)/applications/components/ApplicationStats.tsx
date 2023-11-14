@@ -13,7 +13,7 @@ export default function ApplicationStats({ application }) {
   return (
     <div className="overflow-hidden rounded-lg bg-white shadow">
       <h2 className="sr-only" id="profile-overview-title">
-        Profile Overview
+        Entrance Application Overview
       </h2>
       <div className="bg-white p-6">
         <div className="sm:flex sm:items-center sm:justify-between">

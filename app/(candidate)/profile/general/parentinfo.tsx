@@ -8,7 +8,6 @@ const ParentInfo = () => {
     queryKey: ["candidate", "parent"],
     queryFn: () => getCandidateParent(),
   });
-  console.log("parentInfo", parentInfo);
 
   return (
     <div>
