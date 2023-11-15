@@ -12,6 +12,7 @@ import Entrance from "../components/entrance";
 import EntranceCities from "../components/entrancecities";
 import Programmes from "../components/programmes";
 import Transactions from "../components/transactions";
+import Jee from "../components/jee";
 
 const Page = ({ params }) => {
   switch (params.section) {
@@ -41,6 +42,8 @@ const Page = ({ params }) => {
       return <Programmes />;
     case "transactions":
       return <Transactions />;
+    case "jee":
+      return <Jee />;
     default:
       return <div>Section does not exists</div>;
   }

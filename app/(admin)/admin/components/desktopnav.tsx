@@ -32,6 +32,7 @@ const navigation = [
       { name: "Info Source", href: "/admin/master/infosource" },
       { name: "States", href: "/admin/master/states" },
       { name: "District", href: "/admin/master/district" },
+      { name: "JEE", href: "/admin/master/jee" },
       { name: "City", href: "/admin/master/city" },
       { name: "Exam", href: "/admin/master/exam" },
       { name: "Courses", href: "/admin/master/courses" },
