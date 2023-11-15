@@ -33,11 +33,15 @@ const Page = async ({ params }) => {
     <div>
       <BreadCrumbs application={application} />
       <div className="mt-10 mx-auto max-w-md sm:max-w-4xl">
-        <EntranceCheckout
-          product={product}
-          application={application}
-          discount={discount}
-        />
+        {product ? (
+          <EntranceCheckout
+            product={product}
+            application={application}
+            discount={discount}
+          />
+        ) : (
+          <p>Product is not defined</p>
+        )}
       </div>
     </div>
   );
