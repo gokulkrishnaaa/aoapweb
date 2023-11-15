@@ -1,10 +1,16 @@
 "use client";
 import DataLoader from "@/app/components/DataLoader";
-import { getExamCityReport, getUTMReport } from "@/app/data/admin/reports";
+import {
+  downloadExamCityReport,
+  getExamCityReport,
+  getUTMReport,
+} from "@/app/data/admin/reports";
 import { getEntrances, getExamsByEntrance } from "@/app/data/entranceclient";
+import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import { Spinner } from "flowbite-react";
 import React, { useState } from "react";
+import FileDownload from "js-file-download";
 
 const ExamCityReports = () => {
   const [entranceId, setEntranceId] = useState(null);
@@ -30,6 +36,18 @@ const ExamCityReports = () => {
     queryFn: () => getExamCityReport({ examId }),
     enabled: !!examId,
   });
+
+  const handleExcelDownload = async () => {
+    try {
+      const data = await downloadExamCityReport({ examId });
+
+      const filename = `Examcities-entrance-${Date.now()}.xlsx`;
+
+      FileDownload(data, filename);
+    } catch (error) {
+      console.error("Error downloading Excel file:", error);
+    }
+  };
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -119,36 +137,48 @@ const ExamCityReports = () => {
             {reportsFetching ? (
               <DataLoader size="lg" />
             ) : reports && reports.length > 0 ? (
-              <table className="min-w-full divide-y divide-gray-300">
-                <thead>
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      City Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Count
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {reports.map((report) => (
-                    <tr key={report.cityname}>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {report.cityname}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {report.count}
-                      </td>
+              <div className="max-w-3xl">
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    className="flex gap-1 items-center rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    onClick={handleExcelDownload}
+                  >
+                    <ArrowDownOnSquareIcon className="h-6 w-6" />
+                    Download Report
+                  </button>
+                </div>
+                <table className="min-w-full divide-y divide-gray-300">
+                  <thead>
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        City Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        Count
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {reports.map((report) => (
+                      <tr key={report.cityname}>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {report.cityname}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {report.count}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             ) : (
               <div>No Data available</div>
             )}

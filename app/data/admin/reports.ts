@@ -19,6 +19,22 @@ export const getExamCityReport = async (input) => {
   }
 };
 
+export const downloadExamCityReport = async (input) => {
+  try {
+    const { data } = await apiclient.post(
+      `/api/admin/reports/examcity/download`,
+      input,
+      {
+        responseType: "blob",
+      }
+    );
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};
+
 export const getStateReport = async (input) => {
   try {
     const { data } = await apiclient.post(`/api/admin/reports/state`, input);
