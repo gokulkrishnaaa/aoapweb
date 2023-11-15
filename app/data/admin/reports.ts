@@ -9,6 +9,16 @@ export const getUTMReport = async (input) => {
   }
 };
 
+export const getExamCityReport = async (input) => {
+  try {
+    const { data } = await apiclient.post(`/api/admin/reports/examcity`, input);
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};
+
 export const getStateReport = async (input) => {
   try {
     const { data } = await apiclient.post(`/api/admin/reports/state`, input);
