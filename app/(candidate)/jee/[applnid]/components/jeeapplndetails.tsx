@@ -4,15 +4,16 @@ import {
   CheckCircleIcon,
   InformationCircleIcon,
 } from "@heroicons/react/24/outline";
-import { getApplicationByExam } from "@/app/data/application";
+import {
+  getApplicationByCandidateId,
+  getApplicationByExam,
+} from "@/app/data/application";
 import JeeProceedPayment from "./jeeproceedpayment";
 import JeeCompleteReg from "./jeecompletereg";
 
 const JeeApplnDetails = async ({ application }) => {
   console.log("application detail jee", application);
-  let aeeeAppln = await getApplicationByExam({
-    examid: application.jee.examId,
-  });
+  let aeeeAppln = await getApplicationByCandidateId();
 
   console.log("aeeAppln", aeeeAppln);
 

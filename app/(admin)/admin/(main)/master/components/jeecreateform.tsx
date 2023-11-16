@@ -12,7 +12,7 @@ const JeeSchema = yup.object().shape({
   description: yup.string().required("Description is required"),
 });
 
-const JeeCreateForm = ({ exam }) => {
+const JeeCreateForm = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const {
@@ -42,9 +42,7 @@ const JeeCreateForm = ({ exam }) => {
   });
 
   async function onSumbit(data) {
-    const fulldata = { ...data, examId: exam.id };
-    console.log(fulldata);
-    await addMutate(fulldata);
+    await addMutate(data);
     reset();
   }
 

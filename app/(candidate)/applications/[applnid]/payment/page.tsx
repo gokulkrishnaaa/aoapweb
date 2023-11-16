@@ -19,11 +19,9 @@ const Page = async ({ params }) => {
   console.log("jee application", jeeApplication);
 
   if (jeeApplication) {
-    if (jeeApplication.jee.examId === application.examId) {
-      if (jeeApplication.status === "REGISTERED") {
-        const jeeproduct = await getProductByCode("jeebtech");
-        discount = parseFloat(jeeproduct.amount);
-      }
+    if (jeeApplication.status === "REGISTERED") {
+      const jeeproduct = await getProductByCode("jeebtech");
+      discount = parseFloat(jeeproduct.amount);
     }
   }
 

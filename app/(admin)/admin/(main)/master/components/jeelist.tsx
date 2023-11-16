@@ -4,6 +4,7 @@ import { getAllJee } from "@/app/data/jee";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import dayjs from "dayjs";
+import v from "voca";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -45,6 +46,12 @@ const JeeList = () => {
                 >
                   Description
                 </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
+                >
+                  Status
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -65,6 +72,14 @@ const JeeList = () => {
                     )}
                   >
                     {item.description}
+                  </td>
+                  <td
+                    className={classNames(
+                      itemIdx === 0 ? "" : "border-t border-gray-200",
+                      "px-3 py-3.5 text-sm text-gray-500 lg:table-cell"
+                    )}
+                  >
+                    {v.capitalize(item.status.toLowerCase())}
                   </td>
                 </tr>
               ))}

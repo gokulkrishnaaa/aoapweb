@@ -12,6 +12,20 @@ export async function getApplicationByExam({ examid }) {
   }
 }
 
+export async function getApplicationByCandidateId() {
+  try {
+    const { data } = await apiclient.get(
+      `/api/application/candidate/latest/aeee`,
+      {
+        headers: { Cookie: cookies().toString() },
+      }
+    );
+    return data;
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function getApplicationById({ applicationid }) {
   try {
     const { data } = await apiclient.get(`/api/application/${applicationid}`, {

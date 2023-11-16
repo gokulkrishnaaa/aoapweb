@@ -56,16 +56,6 @@ export const getActiveJee = async () => {
   }
 };
 
-export const getActiveAeeeForJee = async () => {
-  try {
-    const { data } = await apiclient.get(`/api/exam/open/jeeaeee`);
-    return data;
-  } catch (error) {
-    const { data } = error.response;
-    return data;
-  }
-};
-
 export const createJee = async (input) => {
   try {
     const { data } = await apiclient.post(`/api/admin/jee/`, input);

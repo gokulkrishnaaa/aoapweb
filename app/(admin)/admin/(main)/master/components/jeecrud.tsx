@@ -2,15 +2,15 @@
 import DataLoader from "@/app/components/DataLoader";
 import { getActiveJee } from "@/app/data/jee";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import JeeCreate from "./jeecreate";
+import v from "voca";
 
 const JeeCrud = () => {
   const { data: item, isLoading: itemLoading } = useQuery({
     queryKey: ["jee", "active"],
     queryFn: () => getActiveJee(),
   });
-  console.log(item);
 
   return (
     <div>
@@ -28,7 +28,8 @@ const JeeCrud = () => {
                 {item.description}
               </p>
               <p>
-                <span className="font-semibold">Status:</span> Active
+                <span className="font-semibold">Status:</span>{" "}
+                {v.capitalize(item.status.toLowerCase())}
               </p>
             </div>
           </div>
