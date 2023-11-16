@@ -31,8 +31,8 @@ const JeeApplyCard = ({ jee }) => {
         <div className="mt-2 sm:flex sm:items-start sm:justify-between">
           <div className="max-w-xl text-sm text-gray-500">
             <p>
-              Register here to apply for B.Tech with your JEE Mains{" "}
-              {jee.description} percentile
+              This option is to apply for B.Tech admission based only on the JEE
+              Mains {jee.description} percentile.
             </p>
           </div>
           <div className="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center">
