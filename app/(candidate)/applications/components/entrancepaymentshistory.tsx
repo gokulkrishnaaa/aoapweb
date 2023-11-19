@@ -62,7 +62,9 @@ const EntrancePaymentsHistory = ({ transactions }) => {
                           <TransactionBadge status={transaction.status} />
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {dayjs(transaction.updatedAt).format("DD/MM/YYYY")}
+                          {dayjs(transaction.updatedAt).format(
+                            "DD/MM/YYYY hh:mm:ss"
+                          )}
                         </td>
                       </tr>
                     ))}
