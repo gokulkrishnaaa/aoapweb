@@ -28,10 +28,10 @@ const JeeApplnDetails = async ({ application }) => {
       </div>
 
       {application.status === "PENDING" ? (
-        aeeeAppln.Registration.length === 0 ? (
-          <JeeProceedPayment application={application} />
-        ) : (
+        aeeeAppln && aeeeAppln.Registration.length > 0 ? (
           <JeeCompleteReg application={application} />
+        ) : (
+          <JeeProceedPayment application={application} />
         )
       ) : (
         <p className="text-sm my-3 flex items-center gap-3">
