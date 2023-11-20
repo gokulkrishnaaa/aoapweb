@@ -116,7 +116,7 @@ const ExamCityReports = () => {
               <div className="">
                 <select
                   onChange={(e) => {
-                    setShowBy("city1");
+                    setShowBy("city");
                     setExamId(e.target.value);
                   }}
                   className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
@@ -148,10 +148,8 @@ const ExamCityReports = () => {
                     }}
                     className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
                   >
-                    <option value="city1">City 1</option>
+                    <option value="city">City</option>
                     <option value="state">State</option>
-                    <option value="city2">City 2</option>
-                    <option value="city3">City 3</option>
                   </select>
                 </div>
               </div>
@@ -190,7 +188,19 @@ const ExamCityReports = () => {
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        Count
+                        Choice 1
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        Choice 2
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        Choice 3
                       </th>
                     </tr>
                   </thead>
@@ -201,7 +211,13 @@ const ExamCityReports = () => {
                           {report.Location}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {report.Count}
+                          {report.Count1}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {report.Count2}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {report.Count3}
                         </td>
                       </tr>
                     ))}
