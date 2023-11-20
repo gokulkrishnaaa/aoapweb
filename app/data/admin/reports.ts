@@ -22,7 +22,7 @@ export const getExamCityReport = async (input) => {
 export const downloadExamCityReport = async (input) => {
   try {
     const { data } = await apiclient.post(
-      `/api/admin/reports/examcity/download`,
+      `/api/admin/reports/examcity?download=true`,
       input,
       {
         responseType: "blob",

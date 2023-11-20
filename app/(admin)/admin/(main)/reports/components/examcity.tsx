@@ -15,6 +15,7 @@ import FileDownload from "js-file-download";
 const ExamCityReports = () => {
   const [entranceId, setEntranceId] = useState(null);
   const [examId, setExamId] = useState(null);
+  const [showBy, setShowBy] = useState(null);
 
   const { data: entrances, isLoading: entrancesLoading } = useQuery({
     queryKey: ["entrances"],
@@ -32,14 +33,14 @@ const ExamCityReports = () => {
     isLoading: reportsLoading,
     isFetching: reportsFetching,
   } = useQuery({
-    queryKey: ["reports", "examcities", { examId }],
-    queryFn: () => getExamCityReport({ examId }),
+    queryKey: ["reports", "examcities", { examId, showBy }],
+    queryFn: () => getExamCityReport({ examId, showBy }),
     enabled: !!examId,
   });
 
   const handleExcelDownload = async () => {
     try {
-      const data = await downloadExamCityReport({ examId });
+      const data = await downloadExamCityReport({ examId, showBy });
 
       const filename = `Examcities-entrance-${Date.now()}.xlsx`;
 
@@ -48,6 +49,8 @@ const ExamCityReports = () => {
       console.error("Error downloading Excel file:", error);
     }
   };
+
+  console.log(reports);
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -113,6 +116,7 @@ const ExamCityReports = () => {
               <div className="">
                 <select
                   onChange={(e) => {
+                    setShowBy("city1");
                     setExamId(e.target.value);
                   }}
                   className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
@@ -128,6 +132,31 @@ const ExamCityReports = () => {
               </div>
             </div>
           </div>
+          {examId ? (
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="first-name"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Show By
+              </label>
+              <div className="relative mt-2">
+                <div className="">
+                  <select
+                    onChange={(e) => {
+                      setShowBy(e.target.value === "" ? null : e.target.value);
+                    }}
+                    className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
+                  >
+                    <option value="city1">City 1</option>
+                    <option value="state">State</option>
+                    <option value="city2">City 2</option>
+                    <option value="city3">City 3</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
 
@@ -155,7 +184,7 @@ const ExamCityReports = () => {
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        City Name
+                        Location Name
                       </th>
                       <th
                         scope="col"
@@ -167,12 +196,12 @@ const ExamCityReports = () => {
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     {reports.map((report) => (
-                      <tr key={report.cityname}>
+                      <tr key={report.Location}>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {report.cityname}
+                          {report.Location}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {report.count}
+                          {report.Count}
                         </td>
                       </tr>
                     ))}
