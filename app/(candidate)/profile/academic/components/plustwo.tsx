@@ -28,7 +28,9 @@ const PlusTwo = () => {
                 12th Standard State
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <div className="text-gray-900">{plusttwo.state.name}</div>
+                <div className="text-gray-900">
+                  {plusttwo.state ? plusttwo.state.name : plusttwo.otherState}
+                </div>
               </dd>
             </div>
           </>
