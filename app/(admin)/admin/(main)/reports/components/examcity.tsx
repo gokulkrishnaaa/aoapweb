@@ -12,6 +12,8 @@ import { Spinner } from "flowbite-react";
 import React, { useState } from "react";
 import FileDownload from "js-file-download";
 
+import v from "voca";
+
 const ExamCityReports = () => {
   const [entranceId, setEntranceId] = useState(null);
   const [examId, setExamId] = useState(null);
@@ -182,8 +184,16 @@ const ExamCityReports = () => {
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        Location Name
+                        {v.capitalize(showBy)}
                       </th>
+                      {showBy === "city" ? (
+                        <th
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          State
+                        </th>
+                      ) : null}
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
@@ -210,6 +220,11 @@ const ExamCityReports = () => {
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                           {report.Location}
                         </td>
+                        {showBy === "city" ? (
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            {report.State}
+                          </td>
+                        ) : null}
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                           {report.Count1}
                         </td>
