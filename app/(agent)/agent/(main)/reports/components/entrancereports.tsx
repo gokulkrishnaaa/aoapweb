@@ -1,29 +1,48 @@
 import DataLoader from "@/app/components/DataLoader";
 import {
-  downloadCandidatesByUtmSource,
-  getCandidatesByUtmSource,
+  downloadUtmCandidatesByEntrance,
+  getUtmCandidatesByEntrance,
 } from "@/app/data/agent/reports";
-import apiclient from "@/app/utilities/createclient";
+import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
+import FileDownload from "js-file-download";
 import Link from "next/link";
 import React from "react";
-import FileDownload from "js-file-download";
-import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 
-const USDReports = ({ source, stateId, districtId }) => {
+const EntranceReports = ({ source, stateId, districtId, entranceId }) => {
+  console.log("state", stateId);
+  console.log("district", districtId);
+  console.log("entranceId", entranceId);
+
   const { data: candidates, isLoading } = useQuery({
-    queryKey: ["reports", "candidate", "utm", source, { stateId, districtId }],
-    queryFn: () => getCandidatesByUtmSource(source, { stateId, districtId }),
+    queryKey: [
+      "reports",
+      "candidate",
+      "exam",
+      source,
+      {
+        stateId,
+        districtId,
+        entranceId,
+      },
+    ],
+    queryFn: () =>
+      getUtmCandidatesByEntrance(source, {
+        stateId,
+        districtId,
+        entranceId,
+      }),
   });
 
   const handleExcelDownload = async () => {
     try {
-      const data = await downloadCandidatesByUtmSource(source, {
+      const data = await downloadUtmCandidatesByEntrance(source, {
         stateId,
         districtId,
+        entranceId,
       });
 
-      const filename = `UTM-${source}-${Date.now()}.xlsx`;
+      const filename = `UTM-${source}-entrance-${Date.now()}.xlsx`;
 
       FileDownload(data, filename);
     } catch (error) {
@@ -46,6 +65,7 @@ const USDReports = ({ source, stateId, districtId }) => {
               Download Report
             </button>
           </h3>
+
           <div className="h-4"></div>
           {isLoading ? (
             <DataLoader size="lg" />
@@ -99,24 +119,30 @@ const USDReports = ({ source, stateId, districtId }) => {
                     scope="col"
                     className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                   >
-                    Profile Updated
+                    Applied
                   </th>
                   <th
                     scope="col"
                     className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                   >
-                    Actions
+                    Registered
                   </th>
+                  {/* <th
+                    scope="col"
+                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                  >
+                    Actions
+                  </th> */}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {candidates.map((candidate) => (
-                  <tr key={candidate.id}>
+                  <tr key={candidate.candidate_id}>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {candidate.Utm.utm_medium}
+                      {candidate.medium}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {candidate.Utm.utm_campaign}
+                      {candidate.campaign}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {candidate.fullname ? candidate.fullname : "nil"}
@@ -128,28 +154,33 @@ const USDReports = ({ source, stateId, districtId }) => {
                       {candidate.phone ? candidate.phone : "nil"}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {candidate.state ? candidate.state.name : "nil"}
+                      {candidate.state_name ? candidate.state_name : "nil"}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {candidate.district ? candidate.district.name : "nil"}
+                      {candidate.district_name
+                        ? candidate.district_name
+                        : "nil"}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {candidate.Onboarding.status ? "Done" : "Pending"}
+                      {candidate.applied ? "Done" : "No"}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {candidate.registered ? "Done" : "No"}
+                    </td>
+                    {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       <Link
-                        href={`/agent/candidate/${candidate.id}`}
+                        href={`/agent/candidate/${candidate.candidate_id}`}
                         className="font-semibold text-pink-600"
                       >
                         View
                       </Link>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
             </table>
           ) : (
-            <div>No Data available</div>
+            <p>No Data available</p>
           )}
         </div>
       </div>
@@ -157,4 +188,4 @@ const USDReports = ({ source, stateId, districtId }) => {
   );
 };
 
-export default USDReports;
+export default EntranceReports;
