@@ -57,3 +57,13 @@ export async function getExamsByEntrance(entranceId) {
     return data;
   }
 }
+
+export async function getExamByEntrance(entranceId) {
+  try {
+    const { data } = await apiclient.get(`/api/entrance/${entranceId}/exam`);
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+}
