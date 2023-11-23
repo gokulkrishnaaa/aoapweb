@@ -166,7 +166,7 @@ const ExamCityReports = () => {
             {reportsFetching ? (
               <DataLoader size="lg" />
             ) : reports && reports.length > 0 ? (
-              <div className="max-w-3xl">
+              <div>
                 <div className="flex justify-end">
                   <button
                     type="button"
