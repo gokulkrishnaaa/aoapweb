@@ -9,6 +9,21 @@ export const getUTMReport = async (input) => {
   }
 };
 
+
+
+
+export const getUTMReportBySource = async (input) => {
+  try {
+    const { data } = await apiclient.post(`/api/admin/reports/utmsource`, input);
+    return data;
+  } catch (error) {
+    return null;
+  }
+};
+
+
+
+
 export const getExamCityReport = async (input) => {
   try {
     const { data } = await apiclient.post(`/api/admin/reports/examcity`, input);
@@ -23,6 +38,22 @@ export const downloadExamCityReport = async (input) => {
   try {
     const { data } = await apiclient.post(
       `/api/admin/reports/examcity?download=true`,
+      input,
+      {
+        responseType: "blob",
+      }
+    );
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};
+
+export const downloadUTMSourceReport = async (input) => {
+  try {
+    const { data } = await apiclient.post(
+      `/api/admin/reports/utmsource?download=true`,
       input,
       {
         responseType: "blob",
@@ -73,3 +104,4 @@ export const getReferer = async () => {
     return null;
   }
 };
+
