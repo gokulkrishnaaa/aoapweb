@@ -1,48 +1,29 @@
 import DataLoader from "@/app/components/DataLoader";
 import {
-  downloadUtmCandidatesByEntrance,
-  getUtmCandidatesByEntrance,
+  downloadCandidatesByUtmSource,
+  getCandidatesByUtmSource,
 } from "@/app/data/agent/reports";
-import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
+import apiclient from "@/app/utilities/createclient";
 import { useQuery } from "@tanstack/react-query";
-import FileDownload from "js-file-download";
 import Link from "next/link";
 import React from "react";
+import FileDownload from "js-file-download";
+import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 
-const EntranceReports = ({ source, stateId, districtId, entranceId }) => {
-  console.log("state", stateId);
-  console.log("district", districtId);
-  console.log("entranceId", entranceId);
-
+const USDReports = ({ source, stateId, districtId }) => {
   const { data: candidates, isLoading } = useQuery({
-    queryKey: [
-      "reports",
-      "candidate",
-      "exam",
-      source,
-      {
-        stateId,
-        districtId,
-        entranceId,
-      },
-    ],
-    queryFn: () =>
-      getUtmCandidatesByEntrance(source, {
-        stateId,
-        districtId,
-        entranceId,
-      }),
+    queryKey: ["reports", "candidate", "utm", source, { stateId, districtId }],
+    queryFn: () => getCandidatesByUtmSource(source, { stateId, districtId }),
   });
 
   const handleExcelDownload = async () => {
     try {
-      const data = await downloadUtmCandidatesByEntrance(source, {
+      const data = await downloadCandidatesByUtmSource(source, {
         stateId,
         districtId,
-        entranceId,
       });
 
-      const filename = `UTM-${source}-entrance-${Date.now()}.xlsx`;
+      const filename = `UTM-${source}-${Date.now()}.xlsx`;
 
       FileDownload(data, filename);
     } catch (error) {
@@ -65,7 +46,6 @@ const EntranceReports = ({ source, stateId, districtId, entranceId }) => {
               Download Report
             </button>
           </h3>
-
           <div className="h-4"></div>
           {isLoading ? (
             <DataLoader size="lg" />
@@ -119,30 +99,24 @@ const EntranceReports = ({ source, stateId, districtId, entranceId }) => {
                     scope="col"
                     className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                   >
-                    Applied
+                    Profile Updated
                   </th>
-                  <th
-                    scope="col"
-                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
-                  >
-                    Registered
-                  </th>
-                  <th
+                  {/* <th
                     scope="col"
                     className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                   >
                     Actions
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {candidates.map((candidate) => (
-                  <tr key={candidate.candidate_id}>
+                  <tr key={candidate.id}>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {candidate.medium}
+                      {candidate.Utm.utm_medium}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {candidate.campaign}
+                      {candidate.Utm.utm_campaign}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {candidate.fullname ? candidate.fullname : "nil"}
@@ -154,33 +128,28 @@ const EntranceReports = ({ source, stateId, districtId, entranceId }) => {
                       {candidate.phone ? candidate.phone : "nil"}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {candidate.state_name ? candidate.state_name : "nil"}
+                      {candidate.state ? candidate.state.name : "nil"}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {candidate.district_name
-                        ? candidate.district_name
-                        : "nil"}
+                      {candidate.district ? candidate.district.name : "nil"}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {candidate.applied ? "Done" : "No"}
+                      {candidate.Onboarding.status ? "Done" : "Pending"}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {candidate.registered ? "Done" : "No"}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       <Link
-                        href={`/agent/candidate/${candidate.candidate_id}`}
+                        href={`/agent/candidate/${candidate.id}`}
                         className="font-semibold text-pink-600"
                       >
                         View
                       </Link>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
             </table>
           ) : (
-            <p>No Data available</p>
+            <div>No Data available</div>
           )}
         </div>
       </div>
@@ -188,4 +157,4 @@ const EntranceReports = ({ source, stateId, districtId, entranceId }) => {
   );
 };
 
-export default EntranceReports;
+export default USDReports;

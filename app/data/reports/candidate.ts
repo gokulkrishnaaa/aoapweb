@@ -19,3 +19,16 @@ export async function getFullJeeDetailsByCandidateId(id) {
     return data;
   }
 }
+
+export async function getAllCandidatesInfo() {
+  try {
+    const { data } = await apiclient.get(`/api/candidates`, {
+      responseType: "blob",
+    });
+
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+}

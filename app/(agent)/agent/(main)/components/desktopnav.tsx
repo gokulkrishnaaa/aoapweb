@@ -10,47 +10,15 @@ function classNames(...classes) {
 }
 
 const navigation = [
-  { name: "Dashboard", href: "/admin/dashboard" },
+  { name: "Dashboard", href: "/agent/dashboard" },
   {
     name: "Reports",
-    children: [
-      { name: "UTM", href: "/admin/reports/utm" },
-      { name: "UTM Source", href: "/admin/reports/utmreport" },
-      { name: "State", href: "/admin/reports/state" },
-      { name: "District", href: "/admin/reports/district" },
-      { name: "Exam", href: "/admin/reports/exam" },
-      { name: "Exam City", href: "/admin/reports/examcity" },
-      { name: "Referer", href: "/admin/reports/referer" },
-      { name: "Candidates", href: "/admin/reports/candidates" },
-    ],
+    children: [{ name: "UTM", href: "/agent/reports/utm" }],
   },
-  {
-    name: "Master",
-    children: [
-      { name: "Entrance", href: "/admin/master/entrance" },
-      { name: "Entrance Cities", href: "/admin/master/entrancecities" },
-      { name: "Programmes", href: "/admin/master/programmes" },
-      { name: "Gender", href: "/admin/master/gender" },
-      { name: "Social Status", href: "/admin/master/socialstatus" },
-      { name: "Info Source", href: "/admin/master/infosource" },
-      { name: "States", href: "/admin/master/states" },
-      { name: "District", href: "/admin/master/district" },
-      { name: "JEE", href: "/admin/master/jee" },
-      { name: "City", href: "/admin/master/city" },
-      { name: "Exam", href: "/admin/master/exam" },
-      { name: "Courses", href: "/admin/master/courses" },
-      { name: "Campus", href: "/admin/master/campus" },
-      { name: "Transactions", href: "/admin/master/transactions" },
-    ],
-  },
-  {
-    name: "Agents",
-    children: [{ name: "Agent", href: "/admin/agents" }],
-  },
-  {
-    name: "Counsellors",
-    children: [{ name: "Counsellor", href: "/admin/counsellors" }],
-  },
+  //   {
+  //     name: "Candidate",
+  //     children: [{ name: "Candidate", href: "/agent/candidate" }],
+  //   },
 ];
 
 const DesktopNav = () => {
