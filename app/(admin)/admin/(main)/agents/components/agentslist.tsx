@@ -32,6 +32,11 @@ const AgentSchema = yup.object().shape({
     .min(1, "Minimum 8 characters"),
   email: yup.string().required("Email is required").email("Not a valid email"),
   username: yup.string().required("Username is required"),
+  phone: yup.string().required("Phone is required"),
+  amount: yup
+    .number()
+    .required("Amount is required")
+    .positive("Amount must be a positive number"),
   password: yup
     .string()
     .required("Password is required")
@@ -147,7 +152,7 @@ export default function AgentsList() {
                 onSubmit={handleSubmit(onSumbit)}
               >
                 <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                  <div className="sm:col-span-3">
+                  <div className="sm:col-span-2">
                     <label
                       htmlFor="fullname"
                       className="block text-sm font-medium leading-6 text-gray-900"
@@ -175,7 +180,7 @@ export default function AgentsList() {
                       </p>
                     )}
                   </div>
-                  <div className="sm:col-span-3">
+                  <div className="sm:col-span-2">
                     <label
                       htmlFor="code"
                       className="block text-sm font-medium leading-6 text-gray-900"
@@ -203,7 +208,35 @@ export default function AgentsList() {
                       </p>
                     )}
                   </div>
-                  <div className="sm:col-span-3">
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Mobile no.
+                    </label>
+                    <div className="relative mt-2">
+                      <input
+                        type="text"
+                        {...register("phone")}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                      />
+                      {errors["phone"] && (
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                          <ExclamationCircleIcon
+                            className="h-5 w-5 text-red-500"
+                            aria-hidden="true"
+                          />
+                        </div>
+                      )}
+                    </div>
+                    {errors["phone"] && (
+                      <p className="mt-2 text-sm text-red-600" id="email-error">
+                        {errors["phone"].message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="sm:col-span-2">
                     <label
                       htmlFor="fullname"
                       className="block text-sm font-medium leading-6 text-gray-900"
@@ -231,7 +264,7 @@ export default function AgentsList() {
                       </p>
                     )}
                   </div>
-                  <div className="sm:col-span-3">
+                  <div className="sm:col-span-2">
                     <label
                       htmlFor="last-name"
                       className="block text-sm font-medium leading-6 text-gray-900"
@@ -283,6 +316,34 @@ export default function AgentsList() {
                       </p>
                     )}
                   </div>
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor="code"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Commission.
+                    </label>
+                    <div className="relative mt-2">
+                      <input
+                        type="email"
+                        {...register("phone")}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                      />
+                      {errors["phone"] && (
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                          <ExclamationCircleIcon
+                            className="h-5 w-5 text-red-500"
+                            aria-hidden="true"
+                          />
+                        </div>
+                      )}
+                    </div>
+                    {errors["phone"] && (
+                      <p className="mt-2 text-sm text-red-600" id="email-error">
+                        {errors["phone"].message}
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <div className="flex justify-end">
                   <button
@@ -330,6 +391,18 @@ export default function AgentsList() {
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
                       >
+                        Mobile no.
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
+                      >
+                        Commission (in Rs)
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
+                      >
                         Active
                       </th>
 
@@ -367,6 +440,22 @@ export default function AgentsList() {
                           )}
                         >
                           {item.email}
+                        </td>
+                        <td
+                          className={classNames(
+                            itemIdx === 0 ? "" : "border-t border-gray-200",
+                            "px-3 py-3.5 text-sm text-gray-500 lg:table-cell"
+                          )}
+                        >
+                          {item.phone}
+                        </td>
+                        <td
+                          className={classNames(
+                            itemIdx === 0 ? "" : "border-t border-gray-200",
+                            "px-3 py-3.5 text-sm text-gray-500 lg:table-cell"
+                          )}
+                        >
+                          {item.amount}
                         </td>
                         <td
                           className={classNames(
