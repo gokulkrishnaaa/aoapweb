@@ -6,8 +6,8 @@ const PayProcessingForm = ({ txndetails }) => {
   console.log(txndetails);
 
   // production details
-  const key = "5serGB";
-  const salt = "SfUWYazGo07yRh3gH0BEjTbzxCliTVCQ";
+  const key = "ypfBaj";
+  const salt = "aG3tGzBZ";
   const gatewayUrl = "https://secure.payu.in/_payment";
 
   // development details
