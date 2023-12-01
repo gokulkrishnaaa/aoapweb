@@ -1,10 +1,14 @@
 import React from "react";
-import GeneralWrapper from "./components/generalwrapper";
+import { getCandidateById } from "@/app/data/agent/candidateserver";
+import AgentCandidateWrapper from "./components/agentcandidatewrapper";
 
-const Page = ({ params }) => {
+const Page = async ({ params }) => {
+  const candidate = await getCandidateById(params.id);
+  console.log(candidate);
+
   return (
-    <div className="max-w-3xl mx-auto px-3 sm:px-6 py-3 sm:py-6">
-      <GeneralWrapper candidateId={params.id} />
+    <div>
+      <AgentCandidateWrapper candidate={candidate} />
     </div>
   );
 };

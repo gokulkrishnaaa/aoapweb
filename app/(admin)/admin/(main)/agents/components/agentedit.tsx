@@ -14,6 +14,15 @@ const AgentSchema = yup.object().shape({
     .required("Name is required")
     .min(1, "Minimum 8 characters"),
   email: yup.string().required("Email is required").email("Not a valid email"),
+  phone: yup.string().required("Phone is required"),
+  amount: yup
+    .string()
+    .required("Amount is required")
+    .test(
+      "is-positive",
+      "Amount should be positive",
+      (value) => parseFloat(value) > 0
+    ),
 });
 
 const AgentEdit = ({ item, editCompleted }) => {
@@ -116,6 +125,64 @@ const AgentEdit = ({ item, editCompleted }) => {
             {errors["email"] && (
               <p className="mt-2 text-sm text-red-600" id="email-error">
                 {errors["email"].message}
+              </p>
+            )}
+          </div>
+          <div className="sm:col-span-3">
+            <label
+              htmlFor="phone"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              Mobile no.
+            </label>
+            <div className="relative mt-2">
+              <input
+                type="text"
+                defaultValue={item.phone}
+                {...register("phone")}
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+              />
+              {errors["phone"] && (
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                  <ExclamationCircleIcon
+                    className="h-5 w-5 text-red-500"
+                    aria-hidden="true"
+                  />
+                </div>
+              )}
+            </div>
+            {errors["phone"] && (
+              <p className="mt-2 text-sm text-red-600" id="email-error">
+                {errors["phone"].message}
+              </p>
+            )}
+          </div>
+          <div className="sm:col-span-3">
+            <label
+              htmlFor="amount"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              Commission (in Rs).
+            </label>
+            <div className="relative mt-2">
+              <input
+                type="text"
+                defaultValue={item.amount}
+                {...register("amount")}
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+              />
+              {errors["amount"] && (
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                  <ExclamationCircleIcon
+                    className="h-5 w-5 text-red-500"
+                    aria-hidden="true"
+                  />
+                </div>
+              )}
+            </div>
+            {errors["amount"] && (
+              <p className="mt-2 text-sm text-red-600" id="email-error">
+                {errors["amount"].message}
               </p>
             )}
           </div>

@@ -34,9 +34,13 @@ const AgentSchema = yup.object().shape({
   username: yup.string().required("Username is required"),
   phone: yup.string().required("Phone is required"),
   amount: yup
-    .number()
+    .string()
     .required("Amount is required")
-    .positive("Amount must be a positive number"),
+    .test(
+      "is-positive",
+      "Amount should be positive",
+      (value) => parseFloat(value) > 0
+    ),
   password: yup
     .string()
     .required("Password is required")
@@ -142,7 +146,7 @@ export default function AgentsList() {
           <AgentEdit item={editItem} editCompleted={editComplete} />
         ) : (
           <>
-            <div className="space-y-5 max-w-2xl">
+            <div className="space-y-5 max-w-7xl">
               <h2 className="text-base font-semibold leading-7 text-gray-900">
                 Agents
               </h2>
@@ -241,7 +245,7 @@ export default function AgentsList() {
                       htmlFor="fullname"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
-                      Username (Same as UTM Source)
+                      Username (UTM Source)
                     </label>
                     <div className="relative mt-2">
                       <input
@@ -318,18 +322,18 @@ export default function AgentsList() {
                   </div>
                   <div className="sm:col-span-2">
                     <label
-                      htmlFor="code"
+                      htmlFor="amount"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
-                      Commission.
+                      Commission (in Rs).
                     </label>
                     <div className="relative mt-2">
                       <input
-                        type="email"
-                        {...register("phone")}
+                        type="text"
+                        {...register("amount")}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
                       />
-                      {errors["phone"] && (
+                      {errors["amount"] && (
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                           <ExclamationCircleIcon
                             className="h-5 w-5 text-red-500"
@@ -338,9 +342,9 @@ export default function AgentsList() {
                         </div>
                       )}
                     </div>
-                    {errors["phone"] && (
+                    {errors["amount"] && (
                       <p className="mt-2 text-sm text-red-600" id="email-error">
-                        {errors["phone"].message}
+                        {errors["amount"].message}
                       </p>
                     )}
                   </div>

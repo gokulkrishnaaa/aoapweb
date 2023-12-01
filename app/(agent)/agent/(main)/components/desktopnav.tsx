@@ -12,6 +12,10 @@ function classNames(...classes) {
 const navigation = [
   { name: "Dashboard", href: "/agent/dashboard" },
   {
+    name: "Candidates",
+    children: [{ name: "List", href: "/agent/candidates" }],
+  },
+  {
     name: "Reports",
     children: [{ name: "UTM", href: "/agent/reports/utm" }],
   },
