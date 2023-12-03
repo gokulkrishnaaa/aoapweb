@@ -5,6 +5,7 @@ export default async function signIn(input) {
     const { data } = await apiclient.post("/api/candidate/signin", input);
     return data;
   } catch (error) {
-    return null;
+    const { data } = error.response;
+    return data;
   }
 }

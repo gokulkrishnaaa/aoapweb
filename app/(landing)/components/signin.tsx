@@ -71,17 +71,21 @@ const SignIn = () => {
             };
           }
 
-          const { onboarding } = await signIn(loginData);
-          console.log(onboarding.status);
+          const data = await signIn(loginData);
 
-          if (onboarding.status) {
-            router.replace("/dashboard");
+          if (data.errors) {
+            throw new Error(data.errors[0].message);
           } else {
-            router.replace("/onboarding");
+            const { onboarding } = data;
+            if (onboarding.status) {
+              router.replace("/dashboard");
+            } else {
+              router.replace("/onboarding");
+            }
           }
         } catch (error) {
           setIsSigninIn(false);
-          setErrors((state) => [...state, "Login Failed. Try Again"]);
+          setErrors((state) => [...state, error.message]);
         }
       }
     }

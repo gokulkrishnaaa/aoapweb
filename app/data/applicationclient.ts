@@ -128,3 +128,25 @@ export async function getApplicationByExam({ examid }) {
     return null;
   }
 }
+
+export async function getApplicationByExamCandidate({ examid, candidateid }) {
+  try {
+    const { data } = await apiclient.get(
+      `/api/application/exam/${examid}/${candidateid}`
+    );
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+}
+
+export const createEntranceApplication = async (input) => {
+  try {
+    const { data } = await apiclient.post(`/api/entrance/application`, input);
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};

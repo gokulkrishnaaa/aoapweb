@@ -51,7 +51,8 @@ export const getCandidateById = async (id) => {
     const { data } = await apiclient.get(`/api/candidate/${id}`);
     return data;
   } catch (error) {
-    return null;
+    const { data } = error.response;
+    return data;
   }
 };
 
@@ -60,13 +61,47 @@ export const getCandidateParentById = async (id) => {
     const { data } = await apiclient.get(`/api/candidate/parent/${id}`);
     return data;
   } catch (error) {
-    return null;
+    const { data } = error.response;
+    return data;
   }
 };
 
-export const getCandidatesByAgent = async (id) => {
+export const getCandidatePlustwoById = async (id) => {
   try {
-    const { data } = await apiclient.get(`/api/agent/${id}/candidates`);
+    const { data } = await apiclient.get(`/api/candidate/plustwo/${id}`);
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};
+
+export const getCandidatesByAgent = async (id, input) => {
+  try {
+    const { data } = await apiclient.post(`/api/agent/${id}/candidates`, input);
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};
+
+export const getStatsByAgent = async (id) => {
+  try {
+    const { data } = await apiclient.get(`/api/agent/${id}/stats`);
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};
+
+export const getApplicationsByAgent = async (id, input) => {
+  try {
+    const { data } = await apiclient.post(
+      `/api/agent/${id}/applications`,
+      input
+    );
     return data;
   } catch (error) {
     const { data } = error.response;

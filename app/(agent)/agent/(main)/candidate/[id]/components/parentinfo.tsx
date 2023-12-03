@@ -1,6 +1,6 @@
+"use client";
 import DataLoader from "@/app/components/DataLoader";
 import { getCandidateParentById } from "@/app/data/agent/candidate";
-import getCandidateParent from "@/app/data/getCandidateParent";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 

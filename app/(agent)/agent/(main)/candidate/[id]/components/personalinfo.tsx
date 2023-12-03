@@ -1,5 +1,4 @@
 "use client";
-import getCandidate from "@/app/data/getCandidate";
 import React from "react";
 import CldPicture from "../components/cldpicture";
 import { useQuery } from "@tanstack/react-query";
@@ -10,6 +9,7 @@ import { getCandidateById } from "@/app/data/agent/candidate";
 import { ArrowLeftIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { PiSignatureBold } from "react-icons/pi";
 import { useRouter } from "next/navigation";
+
 const PersonalInfo = ({ candidateId }) => {
   const router = useRouter();
 

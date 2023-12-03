@@ -13,7 +13,10 @@ const navigation = [
   { name: "Dashboard", href: "/agent/dashboard" },
   {
     name: "Candidates",
-    children: [{ name: "List", href: "/agent/candidates" }],
+    children: [
+      { name: "List", href: "/agent/candidates" },
+      { name: "Applications", href: "/agent/candidates/applications" },
+    ],
   },
   {
     name: "Reports",

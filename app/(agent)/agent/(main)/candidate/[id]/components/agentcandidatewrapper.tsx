@@ -1,11 +1,10 @@
 "use client";
 import React, { useContext } from "react";
 import { UserContext } from "../../../components/UserProvider";
-import AgentCandidateLanding from "./agentcandidatelanding";
 import CandidateEmpty from "./candidateempty";
 import OnboardingWrapper from "./onboardingwrapper";
 import StepsNav from "../../../candidates/components/stepsnav";
-import GeneralWrapper from "./generalwrapper";
+import DashBaordWrapper from "./dashboardwrapper";
 
 const AgentCandidateWrapper = ({ candidate }) => {
   const user = useContext(UserContext);
@@ -23,7 +22,7 @@ const AgentCandidateWrapper = ({ candidate }) => {
     );
   }
 
-  return <GeneralWrapper candidateId={candidate.id} />;
+  return <DashBaordWrapper candidate={candidate} agent={user} />;
 };
 
 export default AgentCandidateWrapper;
