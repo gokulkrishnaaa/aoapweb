@@ -71,10 +71,10 @@ export default function Stats() {
               <div className="absolute inset-x-0 bottom-0 bg-gray-50 px-4 py-4 sm:px-6">
                 <div className="text-sm">
                   <a
-                    href="/agent/candidates"
+                    href="/agent/candidates/applications"
                     className="font-medium text-pink-600 hover:text-pink-500"
                   >
-                    View all<span className="sr-only"> Candidates stats</span>
+                    View all<span className="sr-only"> Application stats</span>
                   </a>
                 </div>
               </div>
