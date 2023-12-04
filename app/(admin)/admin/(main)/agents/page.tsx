@@ -1,8 +1,11 @@
-import React from "react";
-import AgentsList from "./components/agentslist";
+import Stats from "./components/stats";
 
 const Page = () => {
-  return <AgentsList />;
+  return (
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-5">
+      <Stats />
+    </div>
+  );
 };
 
 export default Page;

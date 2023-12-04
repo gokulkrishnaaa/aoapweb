@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useRef, useState } from "react";
 import { UserContext } from "../../components/UserProvider";
 import {
+  getAllApplicationsByAgent,
   getApplicationsByAgent,
   getCandidatesByAgent,
 } from "@/app/data/agent/candidate";

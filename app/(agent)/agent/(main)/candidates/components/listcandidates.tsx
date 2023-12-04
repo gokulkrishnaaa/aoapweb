@@ -2,7 +2,10 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useRef, useState } from "react";
 import { UserContext } from "../../components/UserProvider";
-import { getCandidatesByAgent } from "@/app/data/agent/candidate";
+import {
+  getAllCandidatesByAgent,
+  getCandidatesByAgent,
+} from "@/app/data/agent/candidate";
 import DataLoader from "@/app/components/DataLoader";
 import Link from "next/link";
 import ShowEntrances from "./showentrances";
@@ -32,6 +35,9 @@ const ListCandidates = () => {
     queryKey: ["agent", agent.id, "candidates", { searchBy, searchTerm }],
     queryFn: () => getCandidatesByAgent(agent.id, { searchBy, searchTerm }),
   });
+
+  console.log(candidates);
+
   return (
     <div>
       <div className="px-4 sm:px-6 lg:px-8">

@@ -14,18 +14,14 @@ const navigation = [
   {
     name: "Candidates",
     children: [
-      { name: "List", href: "/agent/candidates" },
-      { name: "Applications", href: "/agent/candidates/applications" },
+      { name: "New Candidate", href: "/agent/candidates" },
+      { name: "Applications (Filled)", href: "/agent/candidates/applications" },
     ],
   },
   {
     name: "Reports",
     children: [{ name: "UTM", href: "/agent/reports/utm" }],
   },
-  //   {
-  //     name: "Candidate",
-  //     children: [{ name: "Candidate", href: "/agent/candidate" }],
-  //   },
 ];
 
 const DesktopNav = () => {

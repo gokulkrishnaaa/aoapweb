@@ -38,3 +38,15 @@ export const removeAgent = async (id) => {
     return data;
   }
 };
+
+export const forgotAgentPassword = async (username) => {
+  try {
+    const { data } = await apiclient.post(`/api/agent/forgotpassword`, {
+      username,
+    });
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};

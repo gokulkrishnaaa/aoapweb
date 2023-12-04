@@ -86,6 +86,16 @@ export const getCandidatesByAgent = async (id, input) => {
   }
 };
 
+export const getAllCandidatesByAgent = async () => {
+  try {
+    const { data } = await apiclient.get(`/api/agent/all/candidates`);
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};
+
 export const getStatsByAgent = async (id) => {
   try {
     const { data } = await apiclient.get(`/api/agent/${id}/stats`);
@@ -102,6 +112,16 @@ export const getApplicationsByAgent = async (id, input) => {
       `/api/agent/${id}/applications`,
       input
     );
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};
+
+export const getAllApplicationsByAgent = async () => {
+  try {
+    const { data } = await apiclient.get(`/api/agent/all/applications`);
     return data;
   } catch (error) {
     const { data } = error.response;

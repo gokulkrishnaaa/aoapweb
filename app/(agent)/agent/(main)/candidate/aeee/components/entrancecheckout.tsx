@@ -75,7 +75,7 @@ const EntranceCheckout = ({ product, application, discount }) => {
                     </td>
 
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      <p>₹ {finalAmount}</p>
+                      <p>₹ {product.amount}</p>
                     </td>
                   </tr>
                   <tr>
@@ -84,7 +84,7 @@ const EntranceCheckout = ({ product, application, discount }) => {
                     </td>
 
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      <p>₹ {finalAmount}</p>
+                      <p>₹ {product.amount}</p>
                     </td>
                   </tr>
                 </tbody>
