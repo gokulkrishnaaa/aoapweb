@@ -19,7 +19,10 @@ export default function BreadCrumbs({ application }) {
           crumb === "" ? (
             <li key="home">
               <div>
-                <Link href="/" className="text-gray-400 hover:text-gray-500">
+                <Link
+                  href="/agent/candidates"
+                  className="text-gray-400 hover:text-gray-500"
+                >
                   <HomeIcon
                     className="h-5 w-5 flex-shrink-0"
                     aria-hidden="true"

@@ -6,6 +6,8 @@ import Link from "next/link";
 import signOut from "@/app/data/signout";
 import { useRouter } from "next/navigation";
 
+const userNavigation = [{ name: "My Profile", href: "/agent/profile" }];
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -44,6 +46,21 @@ const ProfileMenu = ({ user }) => {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+          {userNavigation.map((item) => (
+            <Menu.Item key={item.name}>
+              {({ active }) => (
+                <Link
+                  href={item.href}
+                  className={classNames(
+                    active ? "bg-pink-100" : "",
+                    "block px-4 py-2 text-sm text-gray-700"
+                  )}
+                >
+                  {item.name}
+                </Link>
+              )}
+            </Menu.Item>
+          ))}
           <Menu.Item>
             {({ active }) => (
               <Link
