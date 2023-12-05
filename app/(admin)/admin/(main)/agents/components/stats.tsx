@@ -82,7 +82,7 @@ export default function Stats() {
               <div className="absolute inset-x-0 bottom-0 bg-gray-50 px-4 py-4 sm:px-6">
                 <div className="text-sm">
                   <a
-                    href="/agent/candidates"
+                    href={`/admin/agents/candidates/${agentId}`}
                     className="font-medium text-pink-600 hover:text-pink-500"
                   >
                     View all<span className="sr-only"> Candidates stats</span>
@@ -103,8 +103,9 @@ export default function Stats() {
             <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">
               <div>
                 <p className="text-base text-gray-900">
-                  <span className="font-semibold">Applied :</span>{" "}
-                  {agentstats.applications.applied}
+                  <span className="font-semibold">Pending :</span>{" "}
+                  {agentstats.applications.registered -
+                    agentstats.applications.applied}
                 </p>
                 <p className="text-base text-gray-900">
                   <span className="font-semibold">Registered :</span>{" "}
@@ -114,7 +115,7 @@ export default function Stats() {
               <div className="absolute inset-x-0 bottom-0 bg-gray-50 px-4 py-4 sm:px-6">
                 <div className="text-sm">
                   <a
-                    href="/agent/candidates/applications"
+                    href={`/admin/agents/applications/${agentId}`}
                     className="font-medium text-pink-600 hover:text-pink-500"
                   >
                     View all<span className="sr-only"> Application stats</span>

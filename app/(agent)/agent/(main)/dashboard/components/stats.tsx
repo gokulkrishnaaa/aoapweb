@@ -60,8 +60,9 @@ export default function Stats() {
             <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">
               <div>
                 <p className="text-base text-gray-900">
-                  <span className="font-semibold">Applied :</span>{" "}
-                  {agentstats.applications.applied}
+                  <span className="font-semibold">Pending :</span>{" "}
+                  {agentstats.applications.applied -
+                    agentstats.applications.registered}
                 </p>
                 <p className="text-base text-gray-900">
                   <span className="font-semibold">Registered :</span>{" "}

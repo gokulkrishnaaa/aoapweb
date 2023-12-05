@@ -9,9 +9,7 @@ const ShowEntrances = ({ applications }) => {
           <div key={`${application.exam.entrance.code}-${application.id}`}>
             {index > 0 ? <span>,</span> : null}
             <Link
-              href={`/agent/candidate/${application.exam.entrance.code.toLowerCase()}/${
-                application.id
-              }`}
+              href={`/admin/agents/application/${application.id}`}
               className="font-semibold text-pink-600"
             >
               {application.exam.entrance.code}

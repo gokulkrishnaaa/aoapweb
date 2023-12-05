@@ -17,7 +17,7 @@ const ProfileMenu = ({ user }) => {
   async function handleSignout(e) {
     e.preventDefault();
     await signOut();
-    router.replace("/admin");
+    router.replace("/agent");
   }
   return (
     <Menu as="div" className="relative">
